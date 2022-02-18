@@ -4,7 +4,7 @@
 
 getAlphacast = function(ds, force = FALSE, validUntil = 0) {
   download = FALSE
-  fileName = paste0('data/', ds, '.csv')
+  fileName = paste0('/Volumes/GoogleDrive/Mi unidad/analisis financieros/functions/data/', ds, '.csv')
   if (!force) {
     if (!file.exists(fileName) || (file.info(fileName)$ctime + (validUntil * 60) < Sys.time())) {
       download = TRUE
@@ -12,7 +12,7 @@ getAlphacast = function(ds, force = FALSE, validUntil = 0) {
   }
   if (download == TRUE) {
     download.file(paste0('https://api.alphacast.io/datasets/',ds,'/data?apiKey=', Sys.getenv("alphacast"),'&&format=csv' ),
-                  paste0('data/', ds, '.csv'),
+                  fileName,
                   sep='',
                   mode = 'wb')
   }
