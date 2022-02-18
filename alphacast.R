@@ -2,14 +2,21 @@
 # Function to get datasets from Alphacast.io
 # uses alphacast key from .Renviron
 
-getAlphacast = function (dataset){
-  library(readr)
-  library(httr)
-  r = GET(
-    url = paste0('https://charts.alphacast.io/api/datasets/', dataset ,'.csv'),
-    authenticate(Sys.getenv('alphacast'), '')
-  )
-  read_csv(rawToChar(r$content))
+getAlphacast = function(ds, force = FALSE, validUntil = 0) {
+  download = FALSE
+  fileName = paste0('./', ds, '.csv')
+  if (!force) {
+    if (!file.exists(fileName) || (file.info(fileName)$ctime + (validUntil * 60) < Sys.time())) {
+      download = TRUE
+    }
+  }
+  if (download == TRUE) {
+    download.file(paste0('https://api.alphacast.io/datasets/',ds,'/data?apiKey=', Sys.getenv("alphacast"),'&&format=csv' ),
+                  paste0('./', ds, '.csv'),
+                  sep='',
+                  mode = 'wb')
+  }
+  read.csv(fileName)
 }
 
 getAlphacastDataSets = function() {
