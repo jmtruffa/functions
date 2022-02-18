@@ -8,7 +8,7 @@ returnMervalCCL = function(inicio = '2005-01-03') {
   ccl <- returnCcl(graba = FALSE, lookBack = Sys.Date() - as.Date(inicio))
   #ccl <- tidyr::drop_na(ccl)
   download.file(paste('http://clasico.rava.com/empresas/precioshistoricos.php?e=','MERVAL','&csv=1', sep=''), paste('/Volumes/GoogleDrive/Mi unidad/analisis financieros/merval/', 'MERVAL', '.csv', sep =''), mode = 'wb')
-  merval = readr::read_csv('/Volumes/GoogleDrive/Mi unidad/analisis financieros/merval/MERVAL.CSV')
+  merval = readr::read_csv('/Volumes/GoogleDrive/Mi unidad/analisis financieros/functions/data/MERVAL.CSV')
   ## filtramos el dato erroneo
   merval = merval %>% filter(fecha <= Sys.Date())
   merval = dplyr::left_join(merval %>% dplyr::filter(fecha >= inicio) %>% dplyr::select(fecha, cierre, volumen), ccl)
@@ -17,7 +17,7 @@ returnMervalCCL = function(inicio = '2005-01-03') {
 
 returnMerval = function(inicio = '2005-01-03') {
   download.file(paste('http://clasico.rava.com/empresas/precioshistoricos.php?e=','MERVAL','&csv=1', sep=''), paste('/Volumes/GoogleDrive/Mi unidad/analisis financieros/merval/', 'MERVAL', '.csv', sep =''), mode = 'wb')
-  merval = readr::read_csv('/Volumes/GoogleDrive/Mi unidad/analisis financieros/merval/MERVAL.CSV')
+  merval = readr::read_csv('/Volumes/GoogleDrive/Mi unidad/analisis financieros/functions/data/MERVAL.CSV')
   ## filtramos el dato erroneo
   merval = merval %>% filter(fecha <= Sys.Date())
   merval = merval %>% dplyr::filter(fecha >= inicio) %>% dplyr::select(fecha, cierre, volumen) %>% tidyr::drop_na()
