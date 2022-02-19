@@ -1,15 +1,16 @@
 #########
 # Function to get datasets from Alphacast.io
 # uses alphacast key from .Renviron
+# validUntil = 0 will force re-download.
 
-getAlphacast = function(ds, force = FALSE, validUntil = 0) {
+getAlphacast = function(ds, validUntil = 0) {
   download = FALSE
   fileName = paste0('/Volumes/GoogleDrive/Mi unidad/analisis financieros/functions/data/', ds, '.csv')
-  if (!force) {
-    if (!file.exists(fileName) || (file.info(fileName)$ctime + (validUntil * 60) < Sys.time())) {
-      download = TRUE
-    }
+
+  if (!file.exists(fileName) || (file.info(fileName)$ctime + (validUntil * 60) < Sys.time())) {
+    download = TRUE
   }
+
   if (download == TRUE) {
     download.file(paste0('https://api.alphacast.io/datasets/',ds,'/data?apiKey=', Sys.getenv("alphacast"),'&&format=csv' ),
                   fileName,
