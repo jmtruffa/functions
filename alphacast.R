@@ -6,7 +6,6 @@
 # I leave the default option of an absolute path of myself since that is my data/ directory.
 
 getAlphacast = function(ds, validUntil = 0, directory = '/Volumes/GoogleDrive/Mi unidad/analisis financieros/functions/data/') {
-  #download = FALSE
   fileName = paste0(directory, ds, '.csv')
 
   if (!file.exists(fileName) || (file.info(fileName)$ctime + (validUntil * 60) < Sys.time())) {

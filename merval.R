@@ -18,18 +18,32 @@ returnMervalCCL = function(inicio = '2005-01-03', validUntil = 0) {
   merval = merval %>% dplyr::mutate(mervalCcl = cierre / CCL) %>% tidyr::drop_na()
 }
 
+# returnMerval = function(inicio = '2005-01-03', validUntil = 0) {
+#   require(dplyr)
+#   fileName = paste('/Volumes/GoogleDrive/Mi unidad/analisis financieros/functions/data/', 'MERVAL', '.csv', sep ='')
+#   if (!file.exists(fileName) || (file.info(fileName)$ctime + (validUntil * 60) < Sys.time())) {
+#     download.file(paste('http://clasico.rava.com/empresas/precioshistoricos.php?e=','MERVAL','&csv=1', sep=''), 
+#                 fileName, mode = 'wb')
+#   }
+#   merval = readr::read_csv(fileName)
+#   ## filtramos el dato erroneo
+#   merval = merval %>% filter(fecha <= Sys.Date())
+#   merval = merval %>% dplyr::filter(fecha >= inicio) %>% dplyr::select(fecha, cierre, volumen) %>% tidyr::drop_na()
+# }
+
+
 returnMerval = function(inicio = '2005-01-03', validUntil = 0) {
   require(dplyr)
+  require(tidyquant)
   fileName = paste('/Volumes/GoogleDrive/Mi unidad/analisis financieros/functions/data/', 'MERVAL', '.csv', sep ='')
   if (!file.exists(fileName) || (file.info(fileName)$ctime + (validUntil * 60) < Sys.time())) {
-    download.file(paste('http://clasico.rava.com/empresas/precioshistoricos.php?e=','MERVAL','&csv=1', sep=''), 
-                fileName, mode = 'wb')
+    merval = tq_get('m.ba', get = "stock.prices", complete_cases = TRUE, from = inicio, to = TODAY())
+    merval = merval %>% select(date, volume, adjusted) %>% distinct(date, .keep_all = TRUE) %>% drop_na(date)
+    colnames(merval) = c("fecha", "volumen", "cierre")
+    write_csv(merval, fileName)
+  } else {
+    merval = readr::read_csv(fileName)
   }
-  merval = readr::read_csv(fileName)
-  ## filtramos el dato erroneo
-  merval = merval %>% filter(fecha <= Sys.Date())
-  merval = merval %>% dplyr::filter(fecha >= inicio) %>% dplyr::select(fecha, cierre, volumen) %>% tidyr::drop_na()
+  merval
 }
-
-
 
