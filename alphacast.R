@@ -5,7 +5,7 @@
 # directory = where to store the downloaded file. If there's a data directory in your working folders specify the absolute path here.
 # I leave the default option of an absolute path of myself since that is my data/ directory.
 
-getAlphacast = function(ds, validUntil = 0, directory = '/Volumes/GoogleDrive/Mi unidad/analisis financieros/functions/data/') {
+getAlphacast = function(ds, validUntil = 0, directory = '/Users/juan/Google Drive/Mi unidad/analisis financieros/functions/data/') {
   fileName = paste0(directory, ds, '.csv')
 
   if (!file.exists(fileName) || (file.info(fileName)$ctime + (validUntil * 60) < Sys.time())) {
