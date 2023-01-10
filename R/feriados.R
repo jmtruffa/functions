@@ -1,4 +1,13 @@
-getFeriados = function(db = "~/GoogleDrive/Mi unidad/data/test.sqlite3") {
+getFeriados = function(db = "") {
+  require(stringr)
+  require(RSQLite)
+  if (db == "") {
+    if (str_detect(Sys.info()['nodename'], "Air")) {
+      db = "~/GoogleDrive/Mi unidad/data/test.sqlite3"
+    } else {
+      db = '/data/test.sqlite3'
+    }
+  }
   con = DBI::dbConnect(RSQLite::SQLite(), dbname = db)
   feriados = DBI::dbReadTable(con, "calendarioFeriados")
   DBI::dbDisconnect(con)
@@ -8,8 +17,16 @@ getFeriados = function(db = "~/GoogleDrive/Mi unidad/data/test.sqlite3") {
 
 addFeriados = function(
     lista,
-    db = "~/GoogleDrive/Mi unidad/data/test.sqlite3") {
-
+    db = "") {
+  require(stringr)
+  require(RSQLite)
+  if (db == "") {
+    if (str_detect(Sys.info()['nodename'], "Air")) {
+      db = "~/GoogleDrive/Mi unidad/data/test.sqlite3"
+    } else {
+      db = '/data/test.sqlite3'
+    }
+  }
   con = dbConnect(RSQLite::SQLite(), dbname = db)
   feriados = dbReadTable(con, "calendarioFeriados")
   feriados$date = as.Date(feriados$date)
@@ -22,11 +39,19 @@ addFeriados = function(
   DBI::dbDisconnect(con)
 }
 
+
 removeFeriados = function(
     lista,
-    db = "~/GoogleDrive/Mi unidad/data/test.sqlite3"
-)  {
-
+    db = "") {
+  require(stringr)
+  require(RSQLite)
+  if (db == "") {
+    if (str_detect(Sys.info()['nodename'], "Air")) {
+      db = "~/GoogleDrive/Mi unidad/data/test.sqlite3"
+    } else {
+      db = '/data/test.sqlite3'
+    }
+  }
   con = dbConnect(RSQLite::SQLite(), dbname = db)
   feriados = dbReadTable(con, "calendarioFeriados")
   feriados$date = as.Date(feriados$date)
