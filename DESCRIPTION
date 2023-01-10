@@ -1,0 +1,10 @@
+Package: functions
+Type: Package
+Title: Financial Functions
+Version: 0.1.0
+Author: Juan Truffa
+Maintainer: Juan Truffa <jmtruffa@gmail.com>
+Description: Provides functions for getting CCL, MEP and dolar prices in Argentina, as well as some other useful functions
+License: Free
+Encoding: UTF-8
+LazyData: true
