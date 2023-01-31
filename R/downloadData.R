@@ -2,10 +2,12 @@ downloadData = function(dataset,
                         destPath = "~/Google Drive/Mi unidad/analisis financieros/functions/data/",
                         lastDate = Sys.Date()) {
   require(functions)
-  cal <- create.calendar('tmpCalendar', getFeriados(), weekdays = c('saturday','sunday'))
   require(tidyverse)
   require(readxl)
   require(DBI)
+  require(bizdays)
+
+  cal <- create.calendar('tmpCalendar', getFeriados(), weekdays = c('saturday','sunday'))
   tmpPath = '~/Google Drive/Mi unidad/analisis financieros/temp'
   dataset = tolower(dataset)
   switch(
