@@ -9,7 +9,8 @@ getYields = function(letras, settlementDate, precios, initialFee = 0, endingFee 
   require(httr)
   require(tidyverse)
   require(bizdays)
-  cal <- create.calendar("Argentina/ANBIMA", holidaysANBIMA, weekdays=c("saturday", "sunday"))
+  require(functions)
+  cal <- create.calendar("tmpCalendar", holidays = getFeriados(), weekdays=c("saturday", "sunday"))
   # if (settlementDate == 0) {
   #   settlementDate = adjust.previous(Sys.Date() + 2, cal)
   # }

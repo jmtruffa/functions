@@ -1,5 +1,5 @@
 downloadData = function(dataset,
-                        destPath = "~/Google Drive/Mi unidad/analisis financieros/functions/data/",
+                        destPath = "~/Google Drive/Mi unidad/analisis financieros/functions/data",
                         lastDate = Sys.Date()) {
   require(functions)
   require(tidyverse)
@@ -103,10 +103,13 @@ downloadData = function(dataset,
     } else {
       temp = readxl::read_xlsx(file.path(tmpPath, tmpFileName), sheet = sheet, skip = skip)
     }
-    temp = temp %>% select(fields)
+    temp = temp %>% select(all_of(fields))
     temp = temp %>% drop_na()
     colnames(temp) = names
     temp$date = as.Date(temp$date, format = format)
+    print(temp)
+    print(destPath)
+    print(file.path(destPath, fileName))
     write_csv(temp, file.path(destPath, fileName))
     return(temp)
   }
