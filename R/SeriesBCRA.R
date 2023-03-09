@@ -1,10 +1,11 @@
 downloadSeriesBCRA = function(db = "") {
-  
+
   require(stringr)
   require(RSQLite)
   require(readxl)
-  
-  
+  require(DBI)
+
+
   if (db == "") {
     if (str_detect(Sys.info()['nodename'], "Air")) {
       db = "~/GoogleDrive/Mi unidad/data/data1.sqlite3"
@@ -14,19 +15,19 @@ downloadSeriesBCRA = function(db = "") {
       tmpPath = "~/Downloads/temp"
     }
   }
-  
+
   con = dbConnect(RSQLite::SQLite(), dbname = db)
   error = FALSE
-  
+
   tmpFileName = "series.xls"
   url = "https://www.bcra.gob.ar/Pdfs/PublicacionesEstadisticas/series.xlsm"
-  
+
   set.seed(1973)
   if (file.exists(file.path(tmpPath, tmpFileName))) {
     tempN=round(runif(1)*10)
     file.copy(file.path(tmpPath, tmpFileName), file.path(tmpPath, paste0('tmp', tempN, tmpFileName)), overwrite = TRUE)
   }
-  
+
   tryCatch(
     {
       download.file(url, destfile = file.path(tmpPath, tmpFileName))
@@ -36,16 +37,16 @@ downloadSeriesBCRA = function(db = "") {
       e <<- e;
     }
   )
-  
+
   if (!error) {
     ret = NULL
-    
+
     ### base monetaria
-    
+
     bm = readxl::read_xlsx(file.path(tmpPath, tmpFileName),
                            sheet = "BASE MONETARIA",
                            skip = 8)
-    bm = bm %>% 
+    bm = bm %>%
       select(c(1, 3:15, 17:23,25:32))
     colnames(bm) = c(
       "date",
@@ -80,19 +81,19 @@ downloadSeriesBCRA = function(db = "") {
     )
     #bm = bm %>% filter(
     #   tipoSerie == "D"
-    # )  %>% 
+    # )  %>%
     #   select(-tipoSerie)
-    
+
     DBI::dbWriteTable(con, "bmBCRA", bm, overwrite = TRUE)
-    
+
     ret$bm = bm
-    
+
     #### reservas
-    
+
     reservas = readxl::read_xlsx(file.path(tmpPath, tmpFileName),
                            sheet = "RESERVAS",
                            skip = 8)
-    reservas = reservas %>% 
+    reservas = reservas %>%
       select(c(
         1,3:5, 7:12,14,16:17
       ))
@@ -113,23 +114,23 @@ downloadSeriesBCRA = function(db = "") {
     )
     # reservas = reservas %>% filter(
     #   tipoSerie == "D"
-    # )  %>% 
+    # )  %>%
     #   select(-tipoSerie)
-    
+
     DBI::dbWriteTable(con, "reservas", reservas, overwrite = TRUE)
-    
+
     ret$reservas = reservas
-    
+
     ### depositos
-    
+
     depositos = readxl::read_xlsx(file.path(tmpPath, tmpFileName),
                                  sheet = "DEPOSITOS",
                                  skip = 8)
-    
+
     depositos = depositos %>% select(
       c(1:21, 23:24, 26:27, 29:30)
     )
-    
+
     colnames(depositos) = c(
       "date",
       "ptCtaCte",
@@ -159,21 +160,21 @@ downloadSeriesBCRA = function(db = "") {
       "M2",
       "tipoSerie"
     )
-    
+
     DBI::dbWriteTable(con, "depositos", depositos, overwrite = TRUE)
-    
+
     ret$depositos = depositos
-    
+
     ### Prestamos
-    
+
     prestamos = readxl::read_xlsx(file.path(tmpPath, tmpFileName),
                                   sheet = "PRESTAMOS",
                                   skip = 8)
-    
+
     prestamos = prestamos %>% select(
       c(1:17, 19, 21:22)
     )
-    
+
     colnames(prestamos) = c(
       "date",
       "prestamosSPPesosAdelantos",
@@ -196,21 +197,21 @@ downloadSeriesBCRA = function(db = "") {
       "prestamosSPPesosMasDolares",
       "tipoSerie"
     )
-    
+
     DBI::dbWriteTable(con, "prestamos", prestamos, overwrite = TRUE)
-    
+
     ret$prestamos = prestamos
-    
+
     ### Tasa de Mercado
-    
+
     tasas = readxl::read_xlsx(file.path(tmpPath, tmpFileName),
                                   sheet = "TASAS DE MERCADO",
                                   skip = 8)
-    
+
     tasas = tasas %>% select(
       c(1:22)
     )
-    
+
     colnames(tasas) = c(
       "date",
       "PF30.44DiasPesosTotalGeneralTNA",
@@ -234,14 +235,14 @@ downloadSeriesBCRA = function(db = "") {
       "callPesosTotalMontoMillones",
       "pasesEntreTerceros1DiaTNA",
       "pasesEntreTercerosMontoMillones"
-    )  
-    
+    )
+
     DBI::dbWriteTable(con, "tasas", tasas, overwrite = TRUE)
-    
+
     ret$tasas = tasas
-    
+
     ### Instrumentos BCRA
-    
+
     instrBCRA = readxl::read_xlsx(file.path(tmpPath, tmpFileName),
                                   sheet = "INSTRUMENTOS DEL BCRA",
                                   skip = 8,
@@ -249,11 +250,11 @@ downloadSeriesBCRA = function(db = "") {
                                     "date",
                                     rep("numeric", 44)
                                   ))
-    
+
     # instrBCRA = instrBCRA %>% select(
     #   c(1:45)
     # )
-    
+
     colnames(instrBCRA) = c(
       "date",
       "saldosPasesPasivosPesosTotal",
@@ -301,29 +302,29 @@ downloadSeriesBCRA = function(db = "") {
       "tasaNobacPesosVariableBadlarBcoPriv2A",
       "tasaNotaliqPesosVariableTasaPolMon190d"
     )
-    
+
     DBI::dbWriteTable(con, "instrBCRA", instrBCRA, overwrite = TRUE)
-    
+
     ret$instrBCRA = instrBCRA
-       
+
     } else {
-    
+
     ret = (error)
   }
-  
+
   DBI::dbDisconnect(con)
   return(ret)
 }
 
 
 getSeriesBCRA = function(table = "bmBCRA", format = "D", db= "") {
-  
+
   require(RSQLite)
   require(DBI)
   require(lubridate)
   require(tidyr)
   require(dplyr)
-  
+
   if (db == "") {
     if (str_detect(Sys.info()['nodename'], "Air")) {
       db = "~/GoogleDrive/Mi unidad/data/data1.sqlite3"
@@ -331,15 +332,15 @@ getSeriesBCRA = function(table = "bmBCRA", format = "D", db= "") {
       db = '/data/data1.sqlite3'
     }
   }
-  
+
   con = dbConnect(RSQLite::SQLite(), dbname = db)
   df = DBI::dbReadTable(con, table)
   DBI::dbDisconnect(con)
-  
+
   df$date = as.Date(as.POSIXct(df$date,origin = "1970-01-01"))
-  
-  
-  
+
+
+
   return(as_tibble(
     df %>%
       {
