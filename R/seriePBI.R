@@ -4,6 +4,7 @@ downloadPBI = function(db = "", url = "https://www.indec.gob.ar/ftp/cuadros/econ
   require(RSQLite)
   require(readxl)
   require(DBI)
+  require(tidyverse)
 
   if (db == "") {
     if (str_detect(Sys.info()['nodename'], "Air")) {
@@ -65,13 +66,16 @@ downloadPBI = function(db = "", url = "https://www.indec.gob.ar/ftp/cuadros/econ
 
     t[,1:length(t)] = sapply(t[,1:length(t)], as.numeric) %>% as_tibble()
 
+    a = t %>% filter(row_number() %% 5 == 0)
+
     t = t %>% filter(row_number() %% 5 != 0)
 
-    t = ts(t, start = c(2004, 1), frequency = 4) ## lo convierto a serie de tiempo en trimestres
 
-    DBI::dbWriteTable(con, "pbiCorriente", t, overwrite = TRUE)
+    DBI::dbWriteTable(con, "pbiCorrienteAnual", a, overwrite = TRUE)
+    DBI::dbWriteTable(con, "pbiCorrienteTrimestral", t, overwrite = TRUE)
 
-    ret$pbiCorriente = t
+    ret$pbiCorrienteAnual = a
+    ret$pbiCorrienteTrimestral = t
 
     ### PBI a precios constantes 2004
 
@@ -101,13 +105,16 @@ downloadPBI = function(db = "", url = "https://www.indec.gob.ar/ftp/cuadros/econ
 
     t[,1:length(t)] = sapply(t[,1:length(t)], as.numeric) %>% as_tibble()
 
+    a = t %>% filter(row_number() %% 5 == 0)
+
     t = t %>% filter(row_number() %% 5 != 0)
 
-    t = ts(t, start = c(2004, 1), frequency = 4) ## lo convierto a serie de tiempo en trimestres
 
-    DBI::dbWriteTable(con, "pbiConstante", t, overwrite = TRUE)
+    DBI::dbWriteTable(con, "pbiConstanteAnual", a, overwrite = TRUE)
+    DBI::dbWriteTable(con, "pbiConstanteTrimestral", t, overwrite = TRUE)
 
-    ret$pbiConstante = t
+    ret$pbiConstanteAnual = a
+    ret$pbiConstanteTrimestral = t
 
     } else {
       ret(error)
@@ -117,4 +124,46 @@ downloadPBI = function(db = "", url = "https://www.indec.gob.ar/ftp/cuadros/econ
     return(ret)
 
 
+}
+
+getPBI = function(table = "pbiCorriente", format = "T", db= "") {
+
+  require(RSQLite)
+  require(DBI)
+
+
+
+  if (db == "") {
+    if (str_detect(Sys.info()['nodename'], "Air")) {
+      db = "~/GoogleDrive/Mi unidad/data/data1.sqlite3"
+    } else {
+      db = '/data/data1.sqlite3'
+    }
   }
+
+  con = dbConnect(RSQLite::SQLite(), dbname = db)
+
+
+
+  switch(
+    format,
+    T = { ## trimestral. va como viene
+      pbi = DBI::dbReadTable(con, paste0(table,"Trimestral"))
+      pbi = stats::ts(pbi, start = c(2004, 1), frequency = 4) ## lo convierto a serie de tiempo en trimestres
+      pbi
+    },
+    A = { ## anual. se toma el promedio cada cuatro
+      pbi = DBI::dbReadTable(con, paste0(table,"Anual"))
+      pbi = stats::ts(pbi, start = c(2004, 1), frequency = 1) ## lo convierto a serie de tiempo en años
+    },
+    {
+      #this is the unnamed or default case
+
+    }
+  )
+
+  DBI::dbDisconnect(con)
+  return(pbi)
+}
+
+
