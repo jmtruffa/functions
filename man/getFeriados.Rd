@@ -5,7 +5,7 @@
   getFeriados(db)
 }
 \description{
-Abre la conexión de sqlite que se le indique en db (default es "~/GoogleDrive/Mi unidad/data/test.sqlite3") y devuelve los feriados disponibles.
+Abre la conexión de sqlite que se le indique en db (default es "~/data/test.sqlite3") y devuelve los feriados disponibles.
 
 Esto permite crear un calendario y agregarle los feriados de la siguiente manera:
 

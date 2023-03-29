@@ -8,10 +8,10 @@ downloadPBI = function(db = "", url = "https://www.indec.gob.ar/ftp/cuadros/econ
 
   if (db == "") {
     if (str_detect(Sys.info()['nodename'], "Air")) {
-      db = "~/GoogleDrive/Mi unidad/data/data1.sqlite3"
+      db = "~/data/data1.sqlite3"
       tmpPath = "~/Google Drive/Mi unidad/analisis financieros/temp"
     } else {
-      db = '/data/data1.sqlite3'
+      db = '~/data/data1.sqlite3'
       tmpPath = "~/Downloads/temp"
     }
   }
@@ -135,9 +135,9 @@ getPBI = function(table = "pbiCorriente", format = "T", db= "") {
 
   if (db == "") {
     if (str_detect(Sys.info()['nodename'], "Air")) {
-      db = "~/GoogleDrive/Mi unidad/data/data1.sqlite3"
+      db = "~/data/data1.sqlite3"
     } else {
-      db = '/data/data1.sqlite3'
+      db = '~/data/data1.sqlite3'
     }
   }
 

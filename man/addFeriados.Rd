@@ -5,7 +5,7 @@
   addFeriados(lista, db)
 }
 \description{
-Abre la conexión de sqlite que se le indique en db (default es "~/GoogleDrive/Mi unidad/data/test.sqlite3") y agrega los feriados detallados en lista.
+Abre la conexión de sqlite que se le indique en db (default es "~/data/test.sqlite3") y agrega los feriados detallados en lista.
 
 Esto permite agregar feriados a un calendario.
 

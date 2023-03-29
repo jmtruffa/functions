@@ -8,10 +8,10 @@ downloadSeriesBCRA = function(db = "") {
 
   if (db == "") {
     if (str_detect(Sys.info()['nodename'], "Air")) {
-      db = "~/GoogleDrive/Mi unidad/data/data1.sqlite3"
+      db = "~/data/data1.sqlite3"
       tmpPath = "~/Google Drive/Mi unidad/analisis financieros/temp"
     } else {
-      db = '/data/data1.sqlite3'
+      db = '~/data/data1.sqlite3'
       tmpPath = "~/Downloads/temp"
     }
   }
@@ -327,9 +327,9 @@ getSeriesBCRA = function(table = "bmBCRA", format = "D", db= "") {
 
   if (db == "") {
     if (str_detect(Sys.info()['nodename'], "Air")) {
-      db = "~/GoogleDrive/Mi unidad/data/data1.sqlite3"
+      db = "~/data/data1.sqlite3"
     } else {
-      db = '/data/data1.sqlite3'
+      db = '~/data/data1.sqlite3'
     }
   }
 

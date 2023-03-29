@@ -5,7 +5,7 @@
   downloadUSCPI()
 }
 \description{
-Descarga el archivo en cuestión. Graba una copia en /Downloads/temp si es linux o en "~/Google Drive/Mi unidad/analisis financieros/temp" y luego parsea el archivo y lo graba en la base de datos sqlite "~/GoogleDrive/Mi unidad/data/test.sqlite3" o '/data/test.sqlite3' para el host linux.
+Descarga el archivo en cuestión. Graba una copia en /Downloads/temp si es linux o en "~/Google Drive/Mi unidad/analisis financieros/temp" y luego parsea el archivo y lo graba en la base de datos sqlite "~/data/test.sqlite3" o '~/data/test.sqlite3' para el host linux.
 
 Value
 

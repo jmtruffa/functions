@@ -5,7 +5,7 @@
   getUSCPI()
 }
 \description{
-Consulta la base  de datos sqlite "~/GoogleDrive/Mi unidad/data/test.sqlite3" o '/data/test.sqlite3' para el host linux y devuelve una tibble con los datos en formato mensual o diario.
+Consulta la base  de datos sqlite "~/data/test.sqlite3" o '~/data/test.sqlite3' para el host linux y devuelve una tibble con los datos en formato mensual o diario.
 
 Value
 

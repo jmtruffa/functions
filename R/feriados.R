@@ -3,9 +3,9 @@ getFeriados = function(db = "") {
   require(RSQLite)
   if (db == "") {
     if (str_detect(Sys.info()['nodename'], "Air")) {
-      db = "~/GoogleDrive/Mi unidad/data/test.sqlite3"
+      db = "~/data/test.sqlite3"
     } else {
-      db = '/data/test.sqlite3'
+      db = '~/data/test.sqlite3'
     }
   }
   con = DBI::dbConnect(RSQLite::SQLite(), dbname = db)
@@ -22,9 +22,9 @@ addFeriados = function(
   require(RSQLite)
   if (db == "") {
     if (str_detect(Sys.info()['nodename'], "Air")) {
-      db = "~/GoogleDrive/Mi unidad/data/test.sqlite3"
+      db = "~/data/test.sqlite3"
     } else {
-      db = '/data/test.sqlite3'
+      db = '~/data/test.sqlite3'
     }
   }
   con = dbConnect(RSQLite::SQLite(), dbname = db)
@@ -47,9 +47,9 @@ removeFeriados = function(
   require(RSQLite)
   if (db == "") {
     if (str_detect(Sys.info()['nodename'], "Air")) {
-      db = "~/GoogleDrive/Mi unidad/data/test.sqlite3"
+      db = "~/data/test.sqlite3"
     } else {
-      db = '/data/test.sqlite3'
+      db = '~/data/test.sqlite3'
     }
   }
   con = dbConnect(RSQLite::SQLite(), dbname = db)
