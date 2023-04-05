@@ -36,7 +36,8 @@ downloadUSCPI = function(db = "") {
     }
   )
   cpi = read_tsv(file.path(tmpPath, tmpFileName))
-  cpi = cpi %>% filter(series_id == "CUSR0000SA0")
+  ## este es Seasonally Adjusted cpi = cpi %>% filter(series_id == "CUSR0000SA0")
+  cpi = cpi %>% filter(series_id == "CUUR0000SA0") ## este es sin ajuste.
   DBI::dbWriteTable(con, "USCPI", cpi, overwrite = TRUE)
   DBI::dbDisconnect(con)
   return(cpi)
