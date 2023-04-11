@@ -1,6 +1,6 @@
 \name{downloadSeriesBCRA}
 \alias{downloadSeriesBCRA}
-\title{Descarga el archivo series.xlsm desde url = "https://www.bcra.gob.ar/Pdfs/PublicacionesEstadisticas/series.xlsm"
+\title{Descarga el archivo series.xlsm desde url = "https://www.bcra.gob.ar/Pdfs/PublicacionesEstadisticas/series.xlsm"}
 \usage{
   downloadSeriesBCRA()
 }
