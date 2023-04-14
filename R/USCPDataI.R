@@ -3,6 +3,7 @@ downloadUSCPI = function(db = "") {
   require(stringr)
   require(RSQLite)
   require(readr)
+  require(tidyverse)
 
 
   if (db == "") {
@@ -28,7 +29,7 @@ downloadUSCPI = function(db = "") {
 
   tryCatch(
     {
-      download.file(url, destfile = file.path(tmpPath, tmpFileName))
+      download.file(url, destfile = file.path(tmpPath, tmpFileName), method = "curl")
     },
     error = function(e) {
       error <<- TRUE;
@@ -72,8 +73,10 @@ getUSCPI = function(format = "", db= "") {
         mutate(
           date = make_date(year = year, month = substring(period,2), day = 01 )
         ) %>%
-        select(-year, -period, -footnote_codes)
+        select(-year, -period, -footnote_codes) %>% 
+        drop_na()
       USCPI = USCPI  %>%
+        drop_na() %>% 
         complete(
           date = seq.Date(min(date), ceiling_date(max(USCPI$date), unit = "month")-1, by="day")
         ) %>%
