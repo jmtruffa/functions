@@ -41,13 +41,13 @@
 #   df
 # }
 
-offset = function (df, direction = 1, names = 2){
+offset = function (df, direction = 1, names = 2, pivot = 100){
   if (direction == 1) {
     df = df %>% group_by_at(names) %>% mutate_at(.vars = c(-1, -names),
-                                                 .funs = list( ~ . / first(.) * 100))
+                                                 .funs = list( ~ . / first(.) * pivot))
   } else if (direction == -1) {
     df = df %>% group_by_at(names) %>% mutate_at(.vars = c(-1, -names),
-                                                 .funs = list(~ . / last(.) * 100))
+                                                 .funs = list(~ . / last(.) * pivot))
   }
   df
 }
