@@ -317,13 +317,17 @@ downloadSeriesBCRA = function(db = "") {
 }
 
 
-getSeriesBCRA = function(table = "bmBCRA", format = "D", db= "") {
+getSeriesBCRA = function(table = "bmBCRA", format = "D", db= "", download = FALSE) {
 
   require(RSQLite)
   require(DBI)
   require(lubridate)
   require(tidyr)
   require(dplyr)
+
+  if (download == TRUE) {
+    functions::downloadSeriesBCRA()
+  }
 
   if (db == "") {
     if (str_detect(Sys.info()['nodename'], "Air")) {

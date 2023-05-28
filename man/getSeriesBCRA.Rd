@@ -23,6 +23,9 @@ VA -> Valor Anual
 VFM
 VPM -> Valor Promedio Mensual
 
+download:
+Si TRUE, llama a downloadSeriesBCRA para actualizar el seriese.
+Default: FALSE
 
 Value
 
