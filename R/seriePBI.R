@@ -1,4 +1,4 @@
-downloadPBI = function(db = "", url = "https://www.indec.gob.ar/ftp/cuadros/economia/sh_oferta_demanda_12_22.xls") {
+downloadPBI = function(db = "", url = "https://www.indec.gob.ar/ftp/cuadros/economia/sh_oferta_demanda_03_23.xls") {
 
   require(stringr)
   require(RSQLite)
