@@ -1,6 +1,6 @@
 \name{getPBI}
 \alias{getPBI}
-\title{Devuelve la serie de PBI previamente bajada.
+\title{Devuelve la serie de PBI previamente bajada.}
 \usage{
   getPBI()
 }
@@ -23,7 +23,6 @@
 \arguments{
   \item{table}{Qué tabla devolver. Corriente o Constante}
   \item{db}{Ubicación del archivo sqlite}
-
 }
 \examples{
   getPBI(table = "pbiConstante", format = "A") # Devuelve la serie anual del PBI Constante (precios 2004)
