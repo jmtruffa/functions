@@ -84,8 +84,36 @@ accumPeriodicMultiple = function (tickers,
 #                              start = '2001-01-01',
 #                              end = '2021-12-31',
 #                              accum = FALSE)
-
-
+# require(kableExtra)
+# require(numform)
+# require(knitr)
+# result = accumPeriodicMultiple(tickers = c("QQQ", "YPF","SPY", "TSLA", "AAPL", "MSFT", "XOM", "C", "NVDA", "KO", "INTC", "AMD", "WMT", "META", "JNJ"),
+#                       amountInvest = 50,
+#                       start = "2010-01-02",
+#                       end = Sys.Date() + 1)
+# result$amount = as.numeric(result$amount)
+# result %>%
+#   arrange(ticker) %>%
+# mutate(
+#   amountLabel =  format(round(amount,0), big.mark = ".") #  f_num(amount, digits = 2, retain.leading.zero = T, big.mark="."),
+#   #deltaText = f_num(delta * 100, digits = 0, retain.leading.zero = T)
+# ) %>%
+#   select(ticker, amountLabel) %>%
+#   kbl(
+#     escape = FALSE,
+#     booktabs = TRUE,
+#     digits = 2,
+#     col.names = c("Ticker", "Monto Final"),
+#     align = "cr",
+#     caption = " "
+#   ) %>%
+#   add_header_above(c("Cuanto obtengo si hubiese invertido 50 usd por mes desde 2010 en:" = 2)) %>%
+#   #                    "Fecha" = 2,
+#   #                    "Variación Precios" = 3)) %>%
+#
+#   kable_classic(full_width = F) %>%
+#   add_footnote(c("Elaboración propia en base a precios NYSE y NASDAQ"),
+#                notation = "symbol")
 
 
 
