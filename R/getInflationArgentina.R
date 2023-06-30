@@ -3,7 +3,7 @@
 
 getInflaArgentina = function (validUntil = 0) {
   require(tidyverse)
-  #source('/Users/juan/Google Drive/Mi unidad/analisis financieros/functions/alphacast.R')
+  require(functions)
   fileDirectory = paste0('/Users/Juan/GoogleDrive/Mi unidad/analisis financieros/functions/data/')
   fileName = paste0(fileDirectory, 'infla.csv')
   if (!file.exists(fileName) || (file.info(fileName)$ctime + (validUntil * 60) < Sys.time())) {
