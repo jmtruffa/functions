@@ -20,10 +20,8 @@ getMerval = function(fechaInicio = "2014-05-27") {
   require(functions)
   require(tidyquant)
 
-  #fechaInicio = "2014-05-27"
 
   ccl = methodsPPI::getPPIDLR(from = fechaInicio)[[1]]
-
   ### acá utilizo la función functions::getUSCPI pidiendole los datos daily para luego poder hacer el ajuste del CCL.
   ccl = left_join(ccl, functions::getUSCPI(format = "daily") %>% select(-series_id, USCPI = value))
   ccl = ccl %>% fill(USCPI)
@@ -39,7 +37,6 @@ getMerval = function(fechaInicio = "2014-05-27") {
       mervalCCL = merval / cclGD,
       mervalCCLAjustado = (mervalCCL) * (LAST(USCPI) / (USCPI))
     )
-
 }
 
 
