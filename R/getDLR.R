@@ -4,13 +4,13 @@
 #' Trae el valor de dolar mep, ccl de BYMA usando
 #' métodos de PPI
 #'
-#'  @param from Fecha Inicio. Mínima 2015-05-27
-#'  @param to hasta donde
+#' @param from Fecha Inicio. Mínima 2015-05-27
+#' @param to hasta donde
 #'
-#'  @returns Una tibble con la serie. Anula la devolución del gráfico como
-#'  segundo componente del valor retornado según viene de getPPIDLR
+#' @returns Una tibble con la serie. Anula la devolución del gráfico como
+#' segundo componente del valor retornado según viene de getPPIDLR
 #'
-#'  @examples getDLR("tabla-a-buscar") -> Devuelve la tibble
+#' @examples getDLR("tabla-a-buscar") -> Devuelve la tibble
 #'
 
 getDLR = function (from = "2014-05-27", to = Sys.Date()) {

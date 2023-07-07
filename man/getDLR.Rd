@@ -8,13 +8,21 @@ métodos de PPI}
 \usage{
 getDLR(from = "2014-05-27", to = Sys.Date())
 }
-\description{
-@param from Fecha Inicio. Mínima 2015-05-27
- @param to hasta donde
-}
-\details{
-@returns Una tibble con la serie. Anula la devolución del gráfico como
- segundo componente del valor retornado según viene de getPPIDLR
+\arguments{
+\item{from}{Fecha Inicio. Mínima 2015-05-27}
 
- @examples getDLR("tabla-a-buscar") -> Devuelve la tibble
+\item{to}{hasta donde}
+}
+\value{
+Una tibble con la serie. Anula la devolución del gráfico como
+segundo componente del valor retornado según viene de getPPIDLR
+}
+\description{
+Duplicado con otro nombre para conveniencia
+Trae el valor de dolar mep, ccl de BYMA usando
+métodos de PPI
+}
+\examples{
+getDLR("tabla-a-buscar") -> Devuelve la tibble
+
 }
