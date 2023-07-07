@@ -15,11 +15,12 @@
 
 
 getTable = function(table, file = "~/data/test.sqlite3") {
+  require(tidyverse)
   tabla = data.frame()
   if (!is.null(table)) {
     con = DBI::dbConnect(RSQLite::SQLite(), file)
     # trae la tabla con los nombres y dbs
-    df = dplyr::as_tibble(tbl(con, "tables"))
+    df = dplyr::as_tibble(dplyr::tbl(con, "tables"))
     DBI::dbDisconnect(con)
     # busca table a ver en qué DB está
     db = df %>% filter(name == table) %>% pull(db)
@@ -32,7 +33,7 @@ getTable = function(table, file = "~/data/test.sqlite3") {
 
       # abre la db que encontró.
       con2 = DBI::dbConnect(RSQLite::SQLite(), db)
-      tabla = dplyr::as_tibble(tbl(con2, table))
+      tabla = dplyr::as_tibble(dplyr::tbl(con2, table))
       #tabla = DBI::dbReadTable(con2, table)
       DBI::dbDisconnect(con2)
 
