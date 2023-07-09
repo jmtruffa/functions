@@ -13,10 +13,10 @@
 #' @examples getDLR("tabla-a-buscar") -> Devuelve la tibble
 #'
 
-getDLR = function (from = "2014-05-27", to = Sys.Date()) {
+getDLR = function (from = "2014-05-27", to = Sys.Date(), settle = "t+0") {
 
-
-  dlr = methodsPPI::getPPIDLR(from, to)[[1]]
+  require(methodsPPI)
+  dlr = getPPIDLR(from, to, settle)[[1]]
 
 
   #### Abajo quedó la anterior que usaba alphacast y que traía también solidario, oficial y blue.
