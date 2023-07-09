@@ -15,7 +15,8 @@
 
 getDLR = function (from = "2014-05-27", to = Sys.Date()) {
 
-  dlr = getPPIDLR(from, to)[[1]]
+
+  dlr = methodsPPI::getPPIDLR(from, to)[[1]]
 
 
   #### Abajo quedó la anterior que usaba alphacast y que traía también solidario, oficial y blue.
