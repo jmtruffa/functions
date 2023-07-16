@@ -14,14 +14,15 @@
 #'
 #'  @examples getMerval() -> Devuelve la tibble
 #'
-getMerval = function(fechaInicio = "2014-05-27") {
+getMerval = function(fechaInicio = "2014-05-27", settle = "t+2") {
 
   require(methodsPPI)
   require(functions)
   require(tidyquant)
 
 
-  ccl = methodsPPI::getPPIDLR(from = fechaInicio)[[1]]
+  #ccl = methodsPPI::getPPIDLR(from = fechaInicio)[[1]]
+  ccl = functions::getDLR(from = fechaInicio, settle = settle)
   ### acá utilizo la función functions::getUSCPI pidiendole los datos daily para luego poder hacer el ajuste del CCL.
   ccl = left_join(ccl, functions::getUSCPI(format = "daily") %>% select(-series_id, USCPI = value))
   ccl = ccl %>% fill(USCPI)
