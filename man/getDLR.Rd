@@ -6,7 +6,7 @@
 Trae el valor de dolar mep, ccl de BYMA usando
 métodos de PPI}
 \usage{
-getDLR(from = "2014-05-27", to = Sys.Date())
+getDLR(from = "2014-05-27", to = Sys.Date(), settle = "t+0")
 }
 \arguments{
 \item{from}{Fecha Inicio. Mínima 2015-05-27}
