@@ -22,7 +22,9 @@
 }
 \arguments{
   \item{table}{Qué tabla devolver. Corriente o Constante}
+  \item{format}{A -> Anual. T -> Trimestral}
   \item{db}{Ubicación del archivo sqlite}
+  \item{download}{Si TRUE llama a downloadPBI}
 }
 \examples{
   getPBI(table = "pbiConstante", format = "A") # Devuelve la serie anual del PBI Constante (precios 2004)
