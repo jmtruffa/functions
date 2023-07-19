@@ -1,3 +1,12 @@
+#' downloadPBI
+#'
+#' Descarga el PBI desde indec. Utiliza la planilla sh_oferta_demanda_03_23.xls
+#' También descarga el EMAE desde "https://www.indec.gob.ar/ftp/cuadros/economia/sh_emae_mensual_base2004.xls"
+#'
+#' @param db Utiliza data1 salvo que se le provea otra
+#' @param url Utiliza https://www.indec.gob.ar/ftp/cuadros/economia/sh_oferta_demanda_03_23.xls por default
+#'
+#' @return retorna NULL si no hay error. Sino, el error.
 downloadPBI = function(db = "", url = "https://www.indec.gob.ar/ftp/cuadros/economia/sh_oferta_demanda_03_23.xls") {
 
   require(stringr)
@@ -177,13 +186,25 @@ downloadPBI = function(db = "", url = "https://www.indec.gob.ar/ftp/cuadros/econ
 
 }
 
-getPBI = function(table = "pbiCorriente", format = "T", db= "") {
+#' getPBI
+#'
+#' Retorna el PBI que trae desde la base de datos db.
+#'
+#' @param table Que tabla retornar. pbiCorriente, pbiConstante.
+#' @param format T para Trimestral. A para Anual
+#' @param db Por default busca en data1. Sino indicar.
+#' @param download Por default es FALSE. Si es TRUE llama a functions::downloadPBI para actualizar.
+#'
+#' @return df con el PBI
+getPBI = function(table = "pbiCorriente", format = "T", db= "", download = FALSE) {
 
   require(RSQLite)
   require(DBI)
   require(stringr)
 
-
+  if (download) {
+    functions::downloadPBI()
+  }
 
   if (db == "") {
     if (str_detect(Sys.info()['nodename'], "Air")) {
@@ -218,13 +239,23 @@ getPBI = function(table = "pbiCorriente", format = "T", db= "") {
   return(pbi)
 }
 
-getEMAE = function(db= "") {
+#' getEMAE
+#'
+#' Devuelve el EMAE almacenado en la base.
+#'
+#' @param db Indicar base. Por default data1.
+#' @param download FALSE. Si TRUE llama functions::downloadPBI
+#'
+#' @return df con el EMAE.
+getEMAE = function(db= "", download = FALSE) {
 
   require(RSQLite)
   require(DBI)
   require(stringr)
 
-
+  if (download) {
+    downloadPBI()
+  }
 
   if (db == "") {
     if (str_detect(Sys.info()['nodename'], "Air")) {
@@ -239,6 +270,8 @@ getEMAE = function(db= "") {
   emae = DBI::dbReadTable(con, "emae")
 
   DBI::dbDisconnect(con)
+
+  emae$date = zoo::as.yearmon(emae$date, "%b %Y")
   return(emae)
 }
 
