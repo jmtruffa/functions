@@ -23,6 +23,6 @@ Trae el valor de dolar mep, ccl de BYMA usando
 métodos de PPI
 }
 \examples{
-getDLR("tabla-a-buscar") -> Devuelve la tibble
+getDLR(from = "2020-09-14", to = Suys.Date(), settle = "t+2") -> Devuelve la tibble
 
 }

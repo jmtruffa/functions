@@ -10,14 +10,45 @@
 #' @returns Una tibble con la serie. Anula la devolución del gráfico como
 #' segundo componente del valor retornado según viene de getPPIDLR
 #'
-#' @examples getDLR("tabla-a-buscar") -> Devuelve la tibble
+#' @examples getDLR(from = "2020-09-14", to = Suys.Date(), settle = "t+2") -> Devuelve la tibble
 #'
 
 getDLR = function (from = "2014-05-27", to = Sys.Date(), settle = "t+0") {
 
   require(methodsPPI)
   dlr = getPPIDLR(from, to, settle)[[1]]
+  dlr = dlr %>% left_join(CCLGGAL(from = from, to = to))
+  return(dlr)
+}
 
+#'
+#' CCLGGAL
+#'
+#' Devuelve el CCL calculado con GGAL.
+#'
+#' @param from Fecha desde
+#' @param to Fecha hasta
+#' @return Devuelve un tibble con la serie en cuestión
+#' @examples CCLGGAL(from = "2020-09-14", to = sys.Date()) devuelve el CCL via GGAL
+CCLGGAL = function(from, to) {
+    require(tidyquant)
+
+    ggal = tq_get(c("ggal.ba","ggal"),
+                  from = from,
+                  to = to
+    )
+
+    ggal.ba = ggal[c(1,2,8)] %>% filter(symbol == "ggal.ba")
+    ggal =  ggal[c(1,2,8)] %>% filter(symbol == "ggal")
+
+    CCLGGAL = left_join(ggal, ggal.ba, by = join_by(date)) %>%
+      mutate(
+        CCLGGAL = adjusted.y * 10 / adjusted.x
+      ) %>%
+      select(date, CCLGGAL) %>%
+      drop_na()
+    return(CCLGGAL)
+  }
 
   #### Abajo quedó la anterior que usaba alphacast y que traía también solidario, oficial y blue.
   ### Función que descarga dolar Blue, oficial mayorista, oficial minorista, solidario desde Alphacast
@@ -39,5 +70,5 @@ getDLR = function (from = "2014-05-27", to = Sys.Date(), settle = "t+0") {
   #   dlr = readr::read_csv(fileName)
   # }
   # dlr
-}
+
 

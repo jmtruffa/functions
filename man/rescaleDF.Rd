@@ -25,3 +25,6 @@ También ajusta las series contiguas si las hay.
 Es ideal para cuando hay series de tiempo juntas en un df, se le
 pasa el df a la función y reescalará todo en función de una fecha.
 }
+\examples{
+rescale(df, "2019-01-08", 3, 0) -> 3 es la columna donde está el valor a setear en 100. format indica que es wide
+}
