@@ -4,7 +4,7 @@
 \alias{getTable}
 \title{Trae una tabla de las bases de datos locales}
 \usage{
-getTable(table, file = "~/data/test.sqlite3")
+getTable(table = NULL, overrideDates = FALSE, file = "~/data/test.sqlite3")
 }
 \description{
 Trae una tabla de las bases de datos locales
@@ -14,8 +14,9 @@ Simplifica el trae una tabla de las bases locales.
 Cada tabla tiene una db asociada. En la base test
 La función busca la tabla y abre la DB que corresponda
 
- @param Tabla No tiene valor por defecto
- @param File permite cambiar el path y nombre de la db a buscar
+ @param table No tiene valor por defecto
+ @param overrideDates Si TRUE, no convierte los campos Fecha
+ @param file permite cambiar el path y nombre de la db a buscar
  Sino va al default que se llama "test"
  @returns Una tibble igual a la tabla consultada
 
