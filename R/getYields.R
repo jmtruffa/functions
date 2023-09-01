@@ -12,7 +12,7 @@
 #' @examples getYields("GD30D", "2023-07-13", 32.3, initialFee = 0.007515, endingFee = 0, endpoint = "yield")
 #'
 #' @return tibble with same data plus yield & duration. There are several other values that the API
-#' returns but not implemented yet.
+#' returns like maturity of the bond, parity, tech value & residual
 
 getYields = function(letras, settlementDate, precios, initialFee = 0, endingFee = 0, endpoint = "yield") {
 
@@ -39,7 +39,7 @@ getYields = function(letras, settlementDate, precios, initialFee = 0, endingFee 
 
   for (i in 1:length(letras)) {
 
-      r = GET(url,
+    r = GET(url,
             query = list(
               ticker = result$letras[i],
               settlementDate = settlementDate[i],
@@ -47,10 +47,15 @@ getYields = function(letras, settlementDate, precios, initialFee = 0, endingFee 
               initialFee = result$initialFee[i],
               endingFee =  result$endingFee[i]
             )
-          )
+    )
 
     result$yield[i] = as.data.frame(fromJSON(rawToChar(r$content)))$Yield
     result$mduration[i] = as.data.frame(fromJSON(rawToChar(r$content)))$MDuration
+    ## nuevo release con mas data
+    result$maturity[i] = as.data.frame(fromJSON(rawToChar(r$content)))$Maturity
+    result$parity[i] = as.data.frame(fromJSON(rawToChar(r$content)))$Parity
+    result$techValue[i] = as.data.frame(fromJSON(rawToChar(r$content)))$TechnicalValue
+    result$residual[i] = as.data.frame(fromJSON(rawToChar(r$content)))$Residual
     i=i+1
   }
   result

@@ -28,7 +28,7 @@ getYields(
 }
 \value{
 tibble with same data plus yield & duration. There are several other values that the API
-returns but not implemented yet.
+returns like maturity of the bond, parity, tech value & residual
 }
 \description{
 getYieds
