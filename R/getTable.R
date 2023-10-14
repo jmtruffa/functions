@@ -48,7 +48,8 @@ getTable = function(table = NULL, overrideDates = FALSE, file = "~/data/test.sql
           if (tabla[[col]][1] >= 1000000) {
             tabla[[col]] = tabla$date = as.Date(as.POSIXct(tabla$date,origin = "1970-01-01"))
           } else {
-            tabla[[col]] =  as.Date(as.POSIXct.Date(tabla[[col]], origin = "1970-01-01"))
+            tabla[[col]] =  as.Date(tabla[[col]], origin = "1899-12-30")
+            #tabla[[col]] =  as.Date(as.POSIXct.Date(tabla[[col]], origin = "1970-01-01"))
           }
 
           #tabla = as_tibble(tabla)
