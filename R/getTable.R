@@ -26,16 +26,16 @@ getTable = function(table = NULL, overrideDates = FALSE, file = "~/data/test.sql
     # busca table a ver en qué DB está
     db = df %>% filter(name == table) %>% pull(db)
 
-    db = paste0(db, ".sqlite3")
-    db = file.path('~/data', db)
-    #db = df[df[1]==table][2]
+    if (length(db) != 0) {
 
-    if (!is.null(db)) {
+      db = paste0(db, ".sqlite3")
+      db = file.path('~/data', db)
 
       # abre la db que encontró.
       con2 = DBI::dbConnect(RSQLite::SQLite(), db)
       tabla = dplyr::as_tibble(dplyr::tbl(con2, table))
       #tabla = DBI::dbReadTable(con2, table)
+
       DBI::dbDisconnect(con2)
 
       if (overrideDates == FALSE) {
@@ -45,22 +45,38 @@ getTable = function(table = NULL, overrideDates = FALSE, file = "~/data/test.sql
         #if (col != 0 | length(col) != 0) {
         if (length(col) != 0) {
 
-          if (tabla[[col]][1] >= 1000000) {
-            tabla[[col]] = tabla$date = as.Date(as.POSIXct(tabla$date,origin = "1970-01-01"))
-          } else {
+          dateValue = tabla[[col]][1]
+
+          if (dateValue <= 25569) { # 1899 base
+
+            tabla[[col]] =  as.Date(tabla[[col]], origin = "1970-01-01")
+
+          } else if (dateValue > 25569 & dateValue <= 100000) { ## excel
+
             tabla[[col]] =  as.Date(tabla[[col]], origin = "1899-12-30")
-            #tabla[[col]] =  as.Date(as.POSIXct.Date(tabla[[col]], origin = "1970-01-01"))
+
+          } else { # Unix timeStamp
+
+            tabla[[col]] = as.Date(as.POSIXct(tabla$date,origin = "1970-01-01"))
+
           }
 
-          #tabla = as_tibble(tabla)
-          #tabla[[col]] =  as.Date(as.POSIXct.Date(tabla[[col]], origin = "1970-01-01")) # esta anda con dolar
-          #tabla$date = as.Date(as.POSIXct(tabla$date,origin = "1970-01-01")) # esta anda con depositos
         }
+
       }
+
+      return(tabla)
+
     }
+
+
   }
-  return(tabla)
+
+  return(warning("No se encontró la tabla"))
+
 }
+
+
 
 getTable(table = "prestamos")
 
