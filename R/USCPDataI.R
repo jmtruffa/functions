@@ -8,10 +8,10 @@ downloadUSCPI = function(db = "") {
 
   if (db == "") {
     if (str_detect(Sys.info()['nodename'], "Air")) {
-      db = "~/data/data1.sqlite3"
+      db = "~/data/economicData.sqlite3"
       tmpPath = "~/Google Drive/Mi unidad/analisis financieros/temp"
     } else {
-      db = '~/data/data1.sqlite3'
+      db = '~/data/economicData.sqlite3'
       tmpPath = "~/Downloads/temp"
     }
   }
@@ -56,9 +56,9 @@ getUSCPI = function(format = "", db= "") {
 
   if (db == "") {
     if (str_detect(Sys.info()['nodename'], "Air")) {
-      db = "~/data/data1.sqlite3"
+      db = "~/data/economicData.sqlite3"
     } else {
-      db = '~/data/data1.sqlite3'
+      db = '~/data/economicData.sqlite3'
     }
   }
 
@@ -73,10 +73,10 @@ getUSCPI = function(format = "", db= "") {
         mutate(
           date = make_date(year = year, month = substring(period,2), day = 01 )
         ) %>%
-        select(-year, -period, -footnote_codes) %>% 
+        select(-year, -period, -footnote_codes) %>%
         drop_na()
       USCPI = USCPI  %>%
-        drop_na() %>% 
+        drop_na() %>%
         complete(
           date = seq.Date(min(date), ceiling_date(max(USCPI$date), unit = "month")-1, by="day")
         ) %>%
