@@ -4,22 +4,18 @@
 \alias{getMerval}
 \title{getMerval devuelve el Merval y otros valores}
 \usage{
-getMerval(fechaInicio = "2014-05-27", settle = "t+2")
+getMerval(fechaInicio = "2014-05-27")
 }
 \description{
 getMerval devuelve el Merval y otros valores
 }
 \details{
-Trae merval en pesos, mep via AL y GD, CCL via GD
-tomando LAST T+0, Canje, USCPI (tener en cuenta que toma el valor
-que haya en la DB. Actualizar previamente), merval al CCL y
-Merval Ajustado por infla USA
+Trae merval en pesos, ccl (via api rofex más histórico), USCPI mervalCCL y mervalCCLAjustado
 
-Utiliza functiones de methodsPPI para tomar precio de CCL,
-tidyquant (la usa para tomar el valor histórico de merval desde yahoo).
+
 
  @param FechaInicio Fecha por defecto 2014-05-27
- @returns Una tibble de 9 columnas
+ @returns Una tibble de 6 columnas
 
  @examples getMerval() -> Devuelve la tibble
 }

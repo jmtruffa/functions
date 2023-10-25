@@ -15,6 +15,7 @@ getMerval = function(fechaInicio = "2014-05-27") {
   require(methodsPPI)
   require(functions)
   require(tidyquant)
+  require(dplyr)
   require(rofex)
 
   merval = tq_get("m.ba", get = "stock.prices", from = fechaInicio, Sys.Date() + 1)
