@@ -12,16 +12,15 @@ dbGetTable = function(
     table,
     host = "10.192.97.146",
     port = 5432,
-    dbname = 'data'
-
+    dbname = 'data',
+    user = Sys.getenv("POSTGRES_USER"),
+    password = Sys.getenv("POSTGRES_PASSWORD")
   ) {
 
   require(RPostgreSQL)
   require(dplyr)
   require(DBI)
-  # obtain user+pass from environment variables
-  user = Sys.getenv("POSTGRES_USER")
-  password = Sys.getenv("POSTGRES_PASS")
+
 
   if (is.null(table)) {
 
