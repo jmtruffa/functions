@@ -10,9 +10,9 @@
 dbGetTable = function(
 
     table,
-    host = "10.192.97.146",
+    host = Sys.getenv("POSTGRES_HOST"),
     port = 5432,
-    dbname = 'data',
+    dbname = Sys.getenv("POSTGRES_DB"),
     user = Sys.getenv("POSTGRES_USER"),
     password = Sys.getenv("POSTGRES_PASSWORD")
   ) {
@@ -63,17 +63,17 @@ dbGetTable = function(
 #'
 dbExecuteQuery = function(
     query,
-    host = "10.192.97.146",
+    host = Sys.getenv("POSTGRES_HOST"),
     port = 5432,
-    dbname = 'data'
-
+    dbname = Sys.getenv("POSTGRES_DB"),
+    user = Sys.getenv("POSTGRES_USER"),
+    password = Sys.getenv("POSTGRES_PASSWORD")
 ) {
   require(RPostgreSQL)
   require(dplyr)
   require(DBI)
   # obtain user+pass from environment variables
-  user = Sys.getenv("POSTGRES_USER")
-  password = Sys.getenv("POSTGRES_PASS")
+
   con <- dbConnect(PostgreSQL(), host = host, port = port, dbname = dbname, user = user, password = password)
   retQuery = dbGetQuery(con, query)
   dbDisconnect(con)
@@ -90,9 +90,11 @@ dbExecuteQuery = function(
 dbWriteDF = function(
     table,
     df,
-    host = "10.192.97.146",
+    host = Sys.getenv("POSTGRES_HOST"),
     port = 5432,
-    dbname = 'data'
+    dbname = Sys.getenv("POSTGRES_DB"),
+    user = Sys.getenv("POSTGRES_USER"),
+    password = Sys.getenv("POSTGRES_PASSWORD")
 ) {
 
   if (is.null(table) || is.null(df)) {
@@ -104,6 +106,7 @@ dbWriteDF = function(
 
   con = dbConnectP(host, port, dbname)
   DBI::dbWriteTable(con, table, df)
+  dbDisconnect(con)
 
 }
 
@@ -120,17 +123,15 @@ dbWriteDF = function(
 #'
 #' @examples con <- dbConnectP()
 #'
-dbConnectP = function(  host = "10.192.97.146",
-                         port = 5432,
-                         dbname = 'data') {
+dbConnectP = function(
+    host = Sys.getenv("POSTGRES_HOST"),
+    port = 5432,
+    dbname = Sys.getenv("POSTGRES_DB"),
+    user = Sys.getenv("POSTGRES_USER"),
+    password = Sys.getenv("POSTGRES_PASSWORD")
+  ) {
   require(RPostgreSQL)
   require(DBI)
-
-  # obtain user+pass from environment variables
-  user <- Sys.getenv("POSTGRES_USER")
-  password <- Sys.getenv("POSTGRES_PASS")
-
-  # Default parameters used in to_sql function
 
 
   # Connect to the PostgreSQL server
