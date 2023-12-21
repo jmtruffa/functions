@@ -2,7 +2,9 @@
 #'
 #' Función para traer una tabla desde el servidor postgresQL
 #'
-#' @param host IP del servidor postgresQL
+#' @param host IP del servidor postgreSQL
+#' @param user Usuario de la base de datos
+#' @param password Password de la base de datos en el servidor
 #' @param port Puerto del servidor
 #' @param dbname Base de Datos. Default='data'
 #' @param table Acá hay que poner alguna. Controla que no esté vacío
@@ -52,7 +54,9 @@ dbGetTable = function(
 #'
 #' Es un mero wraper de dbGetQuery de DBI para no tener que indicar servidor, puerto y db
 #'
-#' @param host IP del servidor postgresQL
+#' @param host IP del servidor postgreSQL
+#' @param user Usuario de la base de datos
+#' @param password Password de la base de datos en el servidor
 #' @param port Puerto del servidor
 #' @param dbname Base de Datos. Default='data'
 #' @param query String con la query. Atención que tablas van con double quotes y valores con single. Recomiendo usar
@@ -86,6 +90,12 @@ dbExecuteQuery = function(
 #'
 #' Wraper de dbWriteTable del paquete DBI pero que asume las conexiones de mi servidor.
 #'
+#' @param host IP del servidor postgreSQL
+#' @param user Usuario de la base de datos
+#' @param password Password de la base de datos en el servidor
+#' @param port Puerto del servidor
+#' @param dbname Base de Datos. Default='data'
+#'
 #' @examples dbWriteDF(table = 'data', df = dfAGrabar)
 dbWriteDF = function(
     table,
@@ -115,11 +125,11 @@ dbWriteDF = function(
 #' dbConnectP
 #'
 #' Wrapper de dbConnect pero con los parámetros de servidor, puerto, user y password ya establecidos.
-#' host <- "10.192.97.146"
-#' port <- 5432
-#' dbname <- 'data'
-#' user <- Sys.getenv("POSTGRES_USER")
-#' password <- Sys.getenv("POSTGRES_PASS")
+#' @param host IP del servidor postgreSQL
+#' @param user Usuario de la base de datos
+#' @param password Password de la base de datos en el servidor
+#' @param port Puerto del servidor
+#' @param dbname Base de Datos. Default='data'
 #'
 #' @examples con <- dbConnectP()
 #'

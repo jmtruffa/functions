@@ -4,15 +4,27 @@
 \alias{dbConnectP}
 \title{dbConnectP}
 \usage{
-dbConnectP(host = "10.192.97.146", port = 5432, dbname = "data")
+dbConnectP(
+  host = Sys.getenv("POSTGRES_HOST"),
+  port = 5432,
+  dbname = Sys.getenv("POSTGRES_DB"),
+  user = Sys.getenv("POSTGRES_USER"),
+  password = Sys.getenv("POSTGRES_PASSWORD")
+)
+}
+\arguments{
+\item{host}{IP del servidor postgreSQL}
+
+\item{port}{Puerto del servidor}
+
+\item{dbname}{Base de Datos. Default='data'}
+
+\item{user}{Usuario de la base de datos}
+
+\item{password}{Password de la base de datos en el servidor}
 }
 \description{
 Wrapper de dbConnect pero con los parámetros de servidor, puerto, user y password ya establecidos.
-host <- "10.192.97.146"
-port <- 5432
-dbname <- 'data'
-user <- Sys.getenv("POSTGRES_USER")
-password <- Sys.getenv("POSTGRES_PASS")
 }
 \examples{
 con <- dbConnectP()

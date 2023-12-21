@@ -4,7 +4,26 @@
 \alias{dbWriteDF}
 \title{dbWriteDF}
 \usage{
-dbWriteDF(table, df, host = "10.192.97.146", port = 5432, dbname = "data")
+dbWriteDF(
+  table,
+  df,
+  host = Sys.getenv("POSTGRES_HOST"),
+  port = 5432,
+  dbname = Sys.getenv("POSTGRES_DB"),
+  user = Sys.getenv("POSTGRES_USER"),
+  password = Sys.getenv("POSTGRES_PASSWORD")
+)
+}
+\arguments{
+\item{host}{IP del servidor postgreSQL}
+
+\item{port}{Puerto del servidor}
+
+\item{dbname}{Base de Datos. Default='data'}
+
+\item{user}{Usuario de la base de datos}
+
+\item{password}{Password de la base de datos en el servidor}
 }
 \description{
 Wraper de dbWriteTable del paquete DBI pero que asume las conexiones de mi servidor.
