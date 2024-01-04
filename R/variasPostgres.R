@@ -114,7 +114,7 @@ dbWriteDF = function(
 
 
 
-  con = dbConnectP(host, port, dbname)
+  con = dbConnectP(host, port, dbname, user, password)
   DBI::dbWriteTable(con, table, df, row.names = F)
   dbDisconnect(con)
 
