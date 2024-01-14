@@ -2,19 +2,22 @@
 % Please edit documentation in R/variasPostgres.R
 \name{dbGetTable}
 \alias{dbGetTable}
-\title{getTableP}
+\title{dbGetTable}
 \usage{
 dbGetTable(
   table,
-  host = Sys.getenv("POSTGRES_HOST"),
-  port = 5432,
-  dbname = Sys.getenv("POSTGRES_DB"),
-  user = Sys.getenv("POSTGRES_USER"),
-  password = Sys.getenv("POSTGRES_PASSWORD")
+  server = "local",
+  host = NULL,
+  port = NULL,
+  dbname = NULL,
+  user = NULL,
+  password = NULL
 )
 }
 \arguments{
 \item{table}{Acá hay que poner alguna. Controla que no esté vacío}
+
+\item{server}{permite evitar los demás parámetros del servidor y que los obtenga con getConf}
 
 \item{host}{IP del servidor postgreSQL}
 
