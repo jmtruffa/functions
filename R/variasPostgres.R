@@ -136,7 +136,8 @@ dbWriteDF = function(
     port = NULL,
     db = NULL,
     user = NULL,
-    password = NULL
+    password = NULL,
+    ...
 ) {
 
   require(RPostgreSQL)
@@ -165,7 +166,7 @@ dbWriteDF = function(
     user = conf$user,
     password = conf$password
   )
-  DBI::dbWriteTable(con, table, df, row.names = FALSE)
+  DBI::dbWriteTable(con, table, df, row.names = FALSE, ...)
   dbDisconnect(con)
 }
 
