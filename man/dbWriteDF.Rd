@@ -7,23 +7,26 @@
 dbWriteDF(
   table,
   df,
-  host = Sys.getenv("POSTGRES_HOST"),
-  port = 5432,
-  dbname = Sys.getenv("POSTGRES_DB"),
-  user = Sys.getenv("POSTGRES_USER"),
-  password = Sys.getenv("POSTGRES_PASSWORD")
+  server = "local",
+  host = NULL,
+  port = NULL,
+  db = NULL,
+  user = NULL,
+  password = NULL
 )
 }
 \arguments{
+\item{server}{permite evitar los demás parámetros del servidor y que los obtenga con getConf}
+
 \item{host}{IP del servidor postgreSQL}
 
 \item{port}{Puerto del servidor}
 
-\item{dbname}{Base de Datos. Default='data'}
-
 \item{user}{Usuario de la base de datos}
 
 \item{password}{Password de la base de datos en el servidor}
+
+\item{dbname}{Base de Datos. Default='data'}
 }
 \description{
 Wraper de dbWriteTable del paquete DBI pero que asume las conexiones de mi servidor.
