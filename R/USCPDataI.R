@@ -45,7 +45,7 @@ downloadUSCPI = function(db = "") {
 }
 
 
-getUSCPI = function(format = "", db= "") {
+getUSCPI = function(format = "", db= "", server = "medina", port = 5432) {
 
   require(stringr)
   require(RSQLite)
@@ -54,17 +54,15 @@ getUSCPI = function(format = "", db= "") {
   require(tidyr)
   require(dplyr)
 
-  if (db == "") {
-    if (str_detect(Sys.info()['nodename'], "Air")) {
-      db = "~/data/economicData.sqlite3"
-    } else {
-      db = '~/data/economicData.sqlite3'
-    }
+  if (db == "") {## postgress
+    USCPI = functions::dbGetTable(table = "USCPI", server = server, port = port)
+    print("Postgres")
+  } else if (db == "sqlite") {
+    db = "~/data/economicData.sqlite3"
+    con = dbConnect(RSQLite::SQLite(), dbname = db)
+    USCPI = DBI::dbReadTable(con, "USCPI")
+    DBI::dbDisconnect(con)
   }
-
-  con = dbConnect(RSQLite::SQLite(), dbname = db)
-  USCPI = DBI::dbReadTable(con, "USCPI")
-  DBI::dbDisconnect(con)
 
   switch(
     format,
