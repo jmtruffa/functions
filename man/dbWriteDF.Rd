@@ -12,7 +12,8 @@ dbWriteDF(
   port = NULL,
   db = NULL,
   user = NULL,
-  password = NULL
+  password = NULL,
+  ...
 )
 }
 \arguments{

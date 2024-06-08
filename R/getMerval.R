@@ -10,7 +10,7 @@
 #'
 #'  @examples getMerval() -> Devuelve la tibble
 #'
-getMerval = function(fechaInicio = "2014-05-27") {
+getMerval = function(fechaInicio = "2014-05-27", ...) {
 
   require(methodsPPI)
   require(functions)
@@ -18,7 +18,7 @@ getMerval = function(fechaInicio = "2014-05-27") {
   require(dplyr)
   require(rofex)
 
-  merval = tq_get("m.ba", get = "stock.prices", from = fechaInicio, Sys.Date() + 1)
+  merval = tq_get("m.ba", get = "stock.prices", from = fechaInicio, Sys.Date() + 1, port = 5432)
   ### corrijo el valor que yahoo tiene mal para julio
   merval = merval %>%
     mutate(
@@ -27,7 +27,7 @@ getMerval = function(fechaInicio = "2014-05-27") {
   # bajo ccl desde API Rofex
   ccl = rofex::getRofexCCL(from = fechaInicio)
   # le pego la infla de US
-  ccl = left_join(ccl, functions::getUSCPI(format = "daily") %>% select(-series_id, USCPI = value))
+  ccl = left_join(ccl, functions::getUSCPI(format = "daily", ...) %>% select(-series_id, USCPI = value))
   ccl = ccl %>% fill(USCPI)
   # Calculo el valor ajustado por infla US
   df = left_join(merval %>% select(date, merval = adjusted), ccl) %>%

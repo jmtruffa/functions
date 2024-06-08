@@ -4,7 +4,7 @@
 \alias{getMerval}
 \title{getMerval devuelve el Merval y otros valores}
 \usage{
-getMerval(fechaInicio = "2014-05-27")
+getMerval(fechaInicio = "2014-05-27", ...)
 }
 \description{
 getMerval devuelve el Merval y otros valores
