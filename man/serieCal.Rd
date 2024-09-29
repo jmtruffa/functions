@@ -4,12 +4,14 @@
 \alias{serieCal}
 \title{serieCal}
 \usage{
-serieCal(from, to = Sys.Date())
+serieCal(from, to = Sys.Date(), ...)
 }
 \arguments{
 \item{from}{Fecha de inicio}
 
 \item{to}{Fecha de fin}
+
+\item{...}{Argumentos adicionales para dbGetTable}
 }
 \value{
 df de fechas

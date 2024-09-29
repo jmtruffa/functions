@@ -12,40 +12,31 @@
 #' @importFrom utils format
 #' @importFrom base as.Date
 #' @importFrom base as.numeric
-#' 
+#'
 days360 = function(start_date, end_date, method = "US") {
   start_date <- as.Date(start_date)
   end_date <- as.Date(end_date)
-  
+
   start_day <- as.numeric(format(start_date, "%d"))
   end_day <- as.numeric(format(end_date, "%d"))
   start_month <- as.numeric(format(start_date, "%m"))
   end_month <- as.numeric(format(end_date, "%m"))
   start_year <- as.numeric(format(start_date, "%Y"))
   end_year <- as.numeric(format(end_date, "%Y"))
-  
+
   if (method == "US") {
-    if (start_day == 31 || (start_month == 2 && start_day == 28)) {
-      start_day <- 30
-    }
-    if (end_day == 31 && start_day < 30) {
-      end_day <- 1
-      end_month <- end_month + 1
-    } else if (end_day == 31) {
-      end_day <- 30
-    }
+    start_day <- ifelse(start_day == 31 | (start_month == 2 & start_day == 28), 30, start_day)
+    end_day <- ifelse(end_day == 31 & start_day < 30, 1, end_day)
+    end_month <- ifelse(end_day == 1 & end_day == 31 & start_day < 30, end_month + 1, end_month)
+    end_day <- ifelse(end_day == 31, 30, end_day)
   } else if (method == "EU") {
-    if (start_day == 31) start_day <- 30
-    if (end_day == 31) end_day <- 30
+    start_day <- ifelse(start_day == 31, 30, start_day)
+    end_day <- ifelse(end_day == 31, 30, end_day)
   }
-  
+
   days360 <- 360 * (end_year - start_year) + 30 * (end_month - start_month) + (end_day - start_day)
   return(days360)
 }
 
-# Ejemplo de uso
-fecha_inicio <- "2023-01-01"
-fecha_fin <- "2024-06-30"
 
-days360(fecha_inicio, fecha_fin)
 
