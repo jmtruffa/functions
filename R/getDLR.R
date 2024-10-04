@@ -29,9 +29,10 @@ getDLR = function (from = "2014-05-27", to = Sys.Date(), settle = "t+0") {
 #' @param from Fecha desde
 #' @param to Fecha hasta
 #' @return Devuelve un tibble con la serie en cuestión
-#' @examples CCLGGAL(from = "2020-09-14", to = sys.Date()) devuelve el CCL via GGAL
-CCLGGAL = function(from, to) {
+#' @examples CCLGGAL(from = "2020-09-14", to = sys.Date() + 1) devuelve el CCL via GGAL
+CCLGGAL = function(from = Sys.Date(), to = Sys.Date() + 1) {
     require(tidyquant)
+    require(tidyverse)
 
     ggal = tq_get(c("ggal.ba","ggal"),
                   from = from,
