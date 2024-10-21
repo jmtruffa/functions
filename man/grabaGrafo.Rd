@@ -2,35 +2,7 @@
 % Please edit documentation in R/grabaGrafo.R
 \name{grabaGrafo}
 \alias{grabaGrafo}
-\title{Guarda un gráfico en un archivo
- 
- Esta función guarda un gráfico en un archivo con un nombre que incluye la fecha y el nombre de la variable.
- 
- @param fecha Fecha que se incluirá en el nombre del archivo. Por defecto es la fecha actual.
- @param variable Gráfico que se guardará.
- @param path Ruta donde se guardará el archivo. Por defecto es "~/OneDrive/outlier/docs/tablasGraficos".
- @param width Ancho del gráfico en pulgadas. Por defecto es 14.2.
- @param height Alto del gráfico en pulgadas. Por defecto es 7.61.
- @param dpi Resolución del gráfico. Por defecto es 300.
- @param units Unidades del gráfico. Por defecto es "in".
- @return NULL
- @export
- @examples
- \dontrun{
- library(ggplot2)
- library(outlier)
- data("datos")
- ggplot(datos, aes(x = fecha, y = valor)) + geom_line()
- guardaGrafo(variable = ggplot(datos, aes(x = fecha, y = valor)) + geom_line())
- }
- @import ggplot2
- @importFrom utils deparse substitute
- @importFrom base format
- @importFrom base as.Date
- @importFrom ggplot2 ggsave
- @importFrom base paste0
- @importFrom base file.path
- @importFrom base missing}
+\title{Guarda un gráfico en un archivo}
 \usage{
 grabaGrafo(
   fecha = Sys.Date(),
@@ -43,11 +15,10 @@ grabaGrafo(
 )
 }
 \description{
-Guarda un gráfico en un archivo
- 
- Esta función guarda un gráfico en un archivo con un nombre que incluye la fecha y el nombre de la variable.
- 
- @param fecha Fecha que se incluirá en el nombre del archivo. Por defecto es la fecha actual.
+Esta función guarda un gráfico en un archivo con un nombre que incluye la fecha y el nombre de la variable.
+}
+\details{
+@param fecha Fecha que se incluirá en el nombre del archivo. Por defecto es la fecha actual.
  @param variable Gráfico que se guardará.
  @param path Ruta donde se guardará el archivo. Por defecto es "~/OneDrive/outlier/docs/tablasGraficos".
  @param width Ancho del gráfico en pulgadas. Por defecto es 14.2.
@@ -62,7 +33,7 @@ Guarda un gráfico en un archivo
  library(outlier)
  data("datos")
  ggplot(datos, aes(x = fecha, y = valor)) + geom_line()
- guardaGrafo(variable = ggplot(datos, aes(x = fecha, y = valor)) + geom_line())
+ grabaGrafo(variable = ggplot(datos, aes(x = fecha, y = valor)) + geom_line())
  }
  @import ggplot2
  @importFrom utils deparse substitute
