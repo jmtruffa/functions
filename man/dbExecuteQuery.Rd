@@ -2,7 +2,7 @@
 % Please edit documentation in R/variasPostgres.R
 \name{dbExecuteQuery}
 \alias{dbExecuteQuery}
-\title{executeQuery}
+\title{dbExecuteQuery}
 \usage{
 dbExecuteQuery(
   query,

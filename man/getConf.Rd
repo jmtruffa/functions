@@ -2,12 +2,7 @@
 % Please edit documentation in R/variasPostgres.R
 \name{getConf}
 \alias{getConf}
-\title{getConf devuelve una lista con variables necesarias para consultar un determinado servidor POSTGRES.
-Es una función que es utilizada, principalmente, por dbGetTable y dbWriteDF, dado que de esa manera
-se les agrega un parámetro que es "server" y de esa manera se le indica donde tiene que grabar o
-buscar esa tabla.
-Se puede desestimar el parámetro en cuestión proveyéndolo.
-Requiere del seteo en .Renviron de las variables de entorno siguientes:}
+\title{getConf}
 \usage{
 getConf(
   server = "local",
@@ -28,6 +23,14 @@ getConf(
 \item{host}{url donde está ubicado}
 }
 \description{
+Devuelve una lista con variables necesarias para consultar un determinado servidor POSTGRES.
+Es una función que es utilizada, principalmente, por dbGetTable y dbWriteDF, dado que de esa manera
+se les agrega un parámetro que es "server" y de esa manera se le indica donde tiene que grabar o
+buscar esa tabla.
+Se puede desestimar el parámetro en cuestión proveyéndolo.
+Requiere del seteo en .Renviron de las variables de entorno siguientes:
+}
+\details{
 LOCAL_POSTGRES_USER
 LOCAL_POSTGRES_PASSWORD
 LOCAL_POSTGRES_HOST

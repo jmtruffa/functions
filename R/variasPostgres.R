@@ -63,7 +63,7 @@ dbGetTable = function(
 
 
 
-#' executeQuery
+#' dbExecuteQuery
 #'
 #' Es un mero wraper de dbGetQuery de DBI para no tener que indicar servidor, puerto y db
 #'
@@ -171,7 +171,9 @@ dbWriteDF = function(
 }
 
 
-#' getConf devuelve una lista con variables necesarias para consultar un determinado servidor POSTGRES.
+#' getConf 
+#' 
+#' Devuelve una lista con variables necesarias para consultar un determinado servidor POSTGRES.
 #' Es una función que es utilizada, principalmente, por dbGetTable y dbWriteDF, dado que de esa manera
 #' se les agrega un parámetro que es "server" y de esa manera se le indica donde tiene que grabar o
 #' buscar esa tabla.
@@ -196,19 +198,21 @@ dbWriteDF = function(
 #' @param password password de la db
 #' @param host url donde está ubicado
 #'
-#' @example getConf(server = "aws")
-#' @example getConf(server = "el-nombre-en-Renviron", host = "192.168.1.1)
 
-# config.R
+#' @dontrun{
+#' getConf(server = "aws")
+#' getConf(server = "el-nombre-en-Renviron", host = "192.168.1.1")
+#' }
 
-getConf <- function(server = "local",
+
+getConf = function(server = "local",
                     user = Sys.getenv(paste(toupper(server), "POSTGRES_USER", sep = "_"), "postgres"),
                     password = Sys.getenv(paste(toupper(server), "POSTGRES_PASSWORD", sep = "_"), "XXX"),
                     host = Sys.getenv(paste(toupper(server), "POSTGRES_HOST", sep = "_"), ""),
                     db = Sys.getenv(paste(toupper(server), "POSTGRES_DB", sep = "_"), ""),
                     port = Sys.getenv(paste(toupper(server), "POSTGRES_PORT", sep = "_"), "")) {
 
-  config <- list(
+  config = list(
     user = user,
     password = password,
     host = if (host == "") stop("Host not provided") else host,
