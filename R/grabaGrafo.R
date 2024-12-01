@@ -27,17 +27,18 @@
 #'  @importFrom base paste0
 #'  @importFrom base file.path
 #'  @importFrom base missing
-grabaGrafo <- function(fecha = Sys.Date(), variable, path = "~/OneDrive/outlier/docs/tablasGraficos",
+grabaGrafo <- function(fecha = Sys.Date(), variable, name = NULL, 
+                       path = "~/OneDrive/outlier/docs/tablasGraficos",
                        width = 14.2, height = 7.61, dpi = 600, units = "in") {
   if (missing(variable)) stop("Falta variable")
-
-  # Capture the variable name as a string
-  variable_name <- deparse(substitute(variable))
-
+  
+  # Use the provided name if given, otherwise use the default variable name capture
+  variable_name <- if (!is.null(name)) name else deparse(substitute(variable))
+  
   if (fecha != Sys.Date()) {
     fecha <- as.Date(fecha)
   }
-
+  
   # Save the plot with fixed dimensions, dpi, and format
   ggsave(filename = file.path(path, paste0(format(fecha, "%Y%m%d"), " ", variable_name, ".png")),
          plot = variable,

@@ -4,7 +4,7 @@
 \alias{CCLGGAL}
 \title{CCLGGAL}
 \usage{
-CCLGGAL(from, to)
+CCLGGAL(from = Sys.Date(), to = Sys.Date() + 1)
 }
 \arguments{
 \item{from}{Fecha desde}
@@ -18,5 +18,5 @@ Devuelve un tibble con la serie en cuestión
 Devuelve el CCL calculado con GGAL.
 }
 \examples{
-CCLGGAL(from = "2020-09-14", to = sys.Date()) devuelve el CCL via GGAL
+CCLGGAL(from = "2020-09-14", to = sys.Date() + 1) devuelve el CCL via GGAL
 }
