@@ -7,6 +7,7 @@
 grabaGrafo(
   fecha = Sys.Date(),
   variable,
+  name = NULL,
   path = "~/OneDrive/outlier/docs/tablasGraficos",
   width = 14.2,
   height = 7.61,
