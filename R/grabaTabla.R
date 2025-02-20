@@ -16,12 +16,12 @@ grabaTabla = function(fecha = Sys.Date(), variable, path = "~/OneDrive/outlier/d
   require(kableExtra)
   require(webshot2)
   variable_name <- deparse(substitute(variable))
-  
-  
+
+
   if (fecha != Sys.Date()) {
     fecha <- as.Date(fecha)
   }
-  
+
   # Save the plot with fixed dimensions, dpi, and format
   save_kable(variable, file = file.path(path, paste0(format(fecha, "%Y%m%d"), " ", variable_name, ".png")),
              vwidth = vwidth, vheight = vheight)
@@ -33,3 +33,19 @@ grabaTabla = function(fecha = Sys.Date(), variable, path = "~/OneDrive/outlier/d
   #        units = units)
 }
 
+grabaTabla2 = function(variable, fecha = Sys.Date(), path = "~/OneDrive/outlier/docs/tablasGraficos",
+                       vwidth, vheight) {
+  if (missing(variable)) stop("Falta variable")
+  require(flextable)
+
+  variable_name <- deparse(substitute(variable))
+
+
+  if (fecha != Sys.Date()) {
+    fecha <- as.Date(fecha)
+  }
+
+  # Save the plot with fixed dimensions, dpi, and format
+  file = file.path(path, paste0(format(fecha, "%Y%m%d"), " ", variable_name, ".png"))
+  save_as_image(x = variable, path = file)
+}
