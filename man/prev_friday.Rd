@@ -2,12 +2,7 @@
 % Please edit documentation in R/prev_friday.R
 \name{prev_friday}
 \alias{prev_friday}
-\title{Crea una columna con el valor encontrado el viernes previo (o adía anterior si es feriado)
-a la fecha. 
-Recibe un dataframe, el nombre de la columna que contiene la fecha, y las columnas
-para las cuáles creará nuevas columnas, con el sufijo "_lagged".
-Utiliza la semántica de tidyverse para seleccionar las columnas.
-Utiliza un calendario para ajustar la fecha en caso de que el viernes sea feriado.}
+\title{Agrega una columna con el valor encontrado el viernes previo}
 \usage{
 prev_friday(data, date_col, value_cols, calendar_name = "cal")
 }
@@ -25,10 +20,5 @@ del viernes previo}
 Dataframe con las columnas adicionales
 }
 \description{
-Crea una columna con el valor encontrado el viernes previo (o adía anterior si es feriado)
-a la fecha. 
-Recibe un dataframe, el nombre de la columna que contiene la fecha, y las columnas
-para las cuáles creará nuevas columnas, con el sufijo "_lagged".
-Utiliza la semántica de tidyverse para seleccionar las columnas.
-Utiliza un calendario para ajustar la fecha en caso de que el viernes sea feriado.
+Crea una columna con el valor encontrado el viernes previo (o adía anterior si es feriado) a la fecha. Recibe un dataframe, el nombre de la columna que contiene la fecha, y las columnas para las cuáles creará nuevas columnas, con el sufijo "_lagged". Utiliza la semántica de tidyverse para seleccionar las columnas. Utiliza un calendario para ajustar la fecha en caso de que el viernes sea feriado.
 }
