@@ -4,7 +4,7 @@
 \alias{days360}
 \title{days360}
 \usage{
-days360(start_date, end_date, method = "US")
+days360(start_date, end_date, method = c("US", "EU"))
 }
 \arguments{
 \item{start_date}{Fecha de inicio.}

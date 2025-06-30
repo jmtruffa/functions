@@ -13,29 +13,54 @@
 #' @importFrom base as.Date
 #' @importFrom base as.numeric
 #'
-days360 = function(start_date, end_date, method = "US") {
+days360 <- function(start_date, end_date, method = c("US", "EU")) {
+
+  method <- match.arg(method)
+
   start_date <- as.Date(start_date)
-  end_date <- as.Date(end_date)
+  end_date   <- as.Date(end_date)
 
-  start_day <- as.numeric(format(start_date, "%d"))
-  end_day <- as.numeric(format(end_date, "%d"))
-  start_month <- as.numeric(format(start_date, "%m"))
-  end_month <- as.numeric(format(end_date, "%m"))
-  start_year <- as.numeric(format(start_date, "%Y"))
-  end_year <- as.numeric(format(end_date, "%Y"))
-
-  if (method == "US") {
-    start_day <- ifelse(start_day == 31 | (start_month == 2 & start_day == 28), 30, start_day)
-    end_day <- ifelse(end_day == 31 & start_day < 30, 1, end_day)
-    end_month <- ifelse(end_day == 1 & end_day == 31 & start_day < 30, end_month + 1, end_month)
-    end_day <- ifelse(end_day == 31, 30, end_day)
-  } else if (method == "EU") {
-    start_day <- ifelse(start_day == 31, 30, start_day)
-    end_day <- ifelse(end_day == 31, 30, end_day)
+  # --- igualamos longitudes (reciclado estilo R) -------------------
+  n1 <- length(start_date); n2 <- length(end_date)
+  if (n1 != n2) {
+    if (n1 == 1L) start_date <- rep(start_date, n2)
+    else if (n2 == 1L) end_date <- rep(end_date, n1)
+    else stop("start_date y end_date deben tener la misma longitud o uno de ellos ser de longitud 1")
   }
 
-  days360 <- 360 * (end_year - start_year) + 30 * (end_month - start_month) + (end_day - start_day)
-  return(days360)
+  # --- helper vectorizado: último día de febrero -------------------
+  is_last_feb <- function(d) {
+    m   <- as.integer(format(d, "%m"))
+    y   <- as.integer(format(d, "%Y"))
+    day <- as.integer(format(d, "%d"))
+    last_feb_day <- as.integer(format(as.Date(paste0(y, "-03-01")) - 1, "%d"))
+    (m == 2L) & (day == last_feb_day)
+  }
+
+  # --- descomposición de fechas -----------------------------------
+  s_day   <- as.integer(format(start_date, "%d"))
+  s_month <- as.integer(format(start_date, "%m"))
+  s_year  <- as.integer(format(start_date, "%Y"))
+
+  e_day   <- as.integer(format(end_date, "%d"))
+  e_month <- as.integer(format(end_date, "%m"))
+  e_year  <- as.integer(format(end_date, "%Y"))
+
+  # --- ajustes US / EU --------------------------------------------
+  if (method == "US") {
+    # Regla 1 (inicio)
+    s_day <- ifelse(s_day == 31L | is_last_feb(start_date), 30L, s_day)
+    # Regla 2 (fin)
+    e_day <- ifelse(e_day == 31L & s_day >= 30L, 30L, e_day)
+  } else {                # método EU
+    s_day <- ifelse(s_day == 31L, 30L, s_day)
+    e_day <- ifelse(e_day == 31L, 30L, e_day)
+  }
+
+  # --- fórmula 30/360 ---------------------------------------------
+  360L * (e_year - s_year) +
+    30L * (e_month - s_month) +
+    (e_day - s_day)
 }
 
 
