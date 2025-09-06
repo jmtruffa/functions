@@ -15,10 +15,10 @@ getMerval = function(fechaInicio = "2014-05-27", ...) {
   require(methodsPPI)
   require(functions)
   require(tidyquant)
-  require(dplyr)
+  require(tidyverse)
   require(rofex)
 
-  merval = tq_get("m.ba", get = "stock.prices", from = fechaInicio, Sys.Date() + 1, port = 5432)
+  merval = tq_get("^MERV", from = fechaInicio, to = Sys.Date() + 1)
   ### corrijo el valor que yahoo tiene mal para julio
   merval = merval %>%
     mutate(
