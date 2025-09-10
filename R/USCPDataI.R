@@ -55,13 +55,14 @@ getUSCPI = function(format = "", db= "", server = "medina", port = 5432) {
   require(dplyr)
 
   if (db == "") {## postgress
-    USCPI = functions::dbGetTable(table = "USCPI", server = server, port = port)
-    print("Postgres")
+    USCPI = functions::dbGetTable(table = "USCPI", server = server, port = port) %>% filter(period != "M13")
+    #print("Postgres")
   } else if (db == "sqlite") {
     db = "~/data/economicData.sqlite3"
     con = dbConnect(RSQLite::SQLite(), dbname = db)
     USCPI = DBI::dbReadTable(con, "USCPI")
     DBI::dbDisconnect(con)
+    print("SQLite. OJO")
   }
 
   switch(
