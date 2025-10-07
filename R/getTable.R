@@ -12,10 +12,17 @@
 #'  @returns Una tibble igual a la tabla consultada
 #'
 #'  @examples getTable("tabla-a-buscar") -> Devuelve la tibble
+#'  @deprecated Usar `dbGetTable()` para pegar en postgres. Ya no hay soporte para SQLlited.
 #'
 
 
 getTable = function(table = NULL, overrideDates = FALSE, file = "~/data/test.sqlite3") {
+  lifecycle::deprecate_soft(
+    when = "1.0.0",  # Versión desde la que está deprecada
+    what = "functions::getTable",
+    with = "dbGetTable()",  # Alternativa recomendada
+    details = "Quite el soporte de SQLlite."
+  )
   require(tidyverse)
   tabla = data.frame()
   if (!is.null(table)) {
@@ -78,7 +85,6 @@ getTable = function(table = NULL, overrideDates = FALSE, file = "~/data/test.sql
 
 
 
-getTable(table = "prestamos")
 
 
 
