@@ -21,4 +21,5 @@ La función busca la tabla y abre la DB que corresponda
  @returns Una tibble igual a la tabla consultada
 
  @examples getTable("tabla-a-buscar") -> Devuelve la tibble
+ @deprecated Usar `dbGetTable()` para pegar en postgres. Ya no hay soporte para SQLlited.
 }
