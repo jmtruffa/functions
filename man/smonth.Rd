@@ -20,5 +20,5 @@ Un dataframe con la sumarización de los datos por mes.
 Esta functión recibe un dataframe y sumariza los datos por mes, calculando la suma, media, mínimo y mnáximo.
 }
 \examples{
-smonth(ccl, date_column = "date", value_columns = c("mepAL", "ccl3"))
+\dontrun{smonth(ccl, date_column = "date", value_columns = c("mepAL", "ccl3"))}
 }

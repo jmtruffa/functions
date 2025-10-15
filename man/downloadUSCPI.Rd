@@ -16,6 +16,8 @@ No devuelve valor. Para obtener los datos, utilizar getUSCPI()
 \item{db}{Ubicación del archivo sqlite}
 }
 \examples{
+\dontrun{
 downloadUSCPI()
 downloadUSCPI(db = ubicacion-de-la-db-sqlite)
+}
 }

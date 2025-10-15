@@ -9,10 +9,10 @@
 #' @param endingFee Valor único a aplicar al final (si se intenta estimar una venta posterio)
 #' @param endpoint "yield" o "apr". Dependiendo a qué endpoint del servidor quiera pegársele.
 #'
-#' @examples getYields("GD30D", "2023-07-13", 32.3, initialFee = 0.007515, endingFee = 0, endpoint = "yield")
+#' @examples \dontrun{getYields("GD30D", "2023-07-13", 32.3, initialFee = 0.007515, endingFee = 0, endpoint = "yield")}
 #'
 #' @return tibble with same data plus yield & duration. There are several other values that the API
-#' returns like maturity of the bond, parity, tech value & residual
+#' @export
 
 getYields = function(letras, settlementDate, precios, initialFee = 0, endingFee = 0, endpoint = "yield") {
 
@@ -24,6 +24,10 @@ getYields = function(letras, settlementDate, precios, initialFee = 0, endingFee 
   endingFee = rep(endingFee, length(letras))
   yield = rep(0, length(letras))
   mduration = rep(0, length(letras))
+  maturity = rep(0, length(letras))
+  parity = rep(0, length(letras))
+  techValue = rep(0, length(letras))
+  residual = rep(0, length(letras))
 
 
   result = tibble(
@@ -32,7 +36,11 @@ getYields = function(letras, settlementDate, precios, initialFee = 0, endingFee 
     initialFee,
     endingFee,
     yield,
-    mduration
+    mduration,
+    maturity,
+    parity,
+    techValue,
+    residual
   )
 
   url = paste0('http://127.0.0.1:8080/', endpoint)

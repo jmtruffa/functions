@@ -28,7 +28,6 @@ getYields(
 }
 \value{
 tibble with same data plus yield & duration. There are several other values that the API
-returns like maturity of the bond, parity, tech value & residual
 }
 \description{
 getYieds
@@ -38,6 +37,6 @@ Function to get yields from the local server running yields.go at 127.0.0.1:8080
 Fees are recycled for all the bonds in the array.
 }
 \examples{
-getYields("GD30D", "2023-07-13", 32.3, initialFee = 0.007515, endingFee = 0, endpoint = "yield")
+\dontrun{getYields("GD30D", "2023-07-13", 32.3, initialFee = 0.007515, endingFee = 0, endpoint = "yield")}
 
 }

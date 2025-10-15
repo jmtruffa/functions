@@ -13,7 +13,7 @@
 #'
 #' @return devuelve el df reescalado
 #'
-#' @examples rescale(df, "2019-01-08", 3, 0) -> 3 es la columna donde está el valor a setear en 100. format indica que es wide
+#' @examples \dontrun{rescale(df, "2019-01-08", 3, 0) #-> 3 es la columna donde está el valor a setear en 100. format indica que es wide}
 rescaleDF = function(df, date, column, format){
   ## buscamos el valor
   valor = pull(df[df[1] == date,][column])

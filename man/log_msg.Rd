@@ -24,6 +24,5 @@ Esta función escribe un mensaje en un archivo de log especificado,
 incluyendo un timestamp y un nivel de severidad (INFO, WARNING, ERROR).
 }
 \examples{
-log_msg("Script finalizado correctamente.", "INFO")
-
+\dontrun{log_msg("Script finalizado correctamente.", "INFO")}
 }

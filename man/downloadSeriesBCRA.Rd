@@ -17,6 +17,9 @@ Se puede solicitar directo de la base de datos (tomando las últimas tablas desc
 \item{db}{Ubicación del archivo sqlite}
 }
 \examples{
+\dontrun{
 downloadSeriesBCRA()
 downloadSeriesBCRA(db = ubicacion-de-la-db-sqlite)
+
+}
 }

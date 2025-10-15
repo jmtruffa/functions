@@ -21,6 +21,8 @@ Converts Date into Date format.
 The dataset with the Date column mapped to Date.
 }
 \examples{
+\dontrun{
   getAlphacast(5288, validUntil = 1440)
   getAlphacast(27844, validUntil = 0, directory = '~/data/')
+}
 }

@@ -44,8 +44,13 @@ downloadUSCPI = function(db = "") {
   return(cpi)
 }
 
-
-getUSCPI = function(format = "", db= "", server = "medina", port = 5432) {
+#' @title getUSCPI
+#' @description Wrapper to get the US CPI data from local database. It can return daily or monthly data.
+#' @param format "daily" or "monthly". Default is "" which returns the raw data.
+#' @param db "" for Postgres or "sqlite" for local sqlite database.
+#' @return tibble with the CPI data.
+#' @export
+getUSCPI = function(format = "", db= "", ...) {
 
   require(stringr)
   require(RSQLite)
@@ -55,7 +60,7 @@ getUSCPI = function(format = "", db= "", server = "medina", port = 5432) {
   require(dplyr)
 
   if (db == "") {## postgress
-    USCPI = functions::dbGetTable(table = "USCPI", server = server, port = port) %>% filter(period != "M13")
+    USCPI = functions::dbGetTable(table = "USCPI", ...) %>% filter(period != "M13")
     #print("Postgres")
   } else if (db == "sqlite") {
     db = "~/data/economicData.sqlite3"

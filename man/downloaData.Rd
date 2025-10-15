@@ -21,6 +21,8 @@ Los nombres de los datasets son case insesitive.
 \item{lastDate}{La fecha más nueva para la que se necesita el dataset. Si es una fecha que ya tiene, no lo descarga}
 }
 \examples{
+\dontrun{
 downloadData(dataset = "cer", lastDate = Sys.Date())
 downloadData(dataset = "a3500", lastDate = Sys.Date())
+}
 }

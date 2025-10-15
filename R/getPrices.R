@@ -11,7 +11,7 @@
 #' @param initialFee Valor único a aplicar upfront. Se recicla
 #' @param endingFee Valor único a aplicar al final (si se intenta estimar una venta posterio)
 #' @param endpoint "price"
-#' @examples getPrices("GD30D", "2023-07-13", 0.28, initialFee = 0.007515, endingFee = 0, endpoint = "yield")
+#' @examples \dontrun{getPrices("GD30D", "2023-07-13", 0.28, initialFee = 0.007515, endingFee = 0, endpoint = "yield")}
 #'
 #' @return tibble with same data plus price & mduration. There are several other values that the API
 #' returns but not implemented yet.

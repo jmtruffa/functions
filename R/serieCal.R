@@ -7,7 +7,10 @@
 #' @param ... Argumentos adicionales para dbGetTable
 #' @return df de fechas
 #' @examples
+#' \dontrun{
 #' serieCal("2019-01-01", "2019-01-31")
+#' }
+#' @export
 serieCal = function(from, to = Sys.Date(), ...) {
   require(bizdays)
   require(functions)

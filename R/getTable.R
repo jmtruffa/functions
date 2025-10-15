@@ -13,7 +13,7 @@
 #'
 #'  @examples getTable("tabla-a-buscar") -> Devuelve la tibble
 #'  @deprecated Usar `dbGetTable()` para pegar en postgres. Ya no hay soporte para SQLlited.
-#'
+#'  @export
 
 
 getTable = function(table = NULL, overrideDates = FALSE, file = "~/data/test.sqlite3") {

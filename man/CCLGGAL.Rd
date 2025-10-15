@@ -12,11 +12,13 @@ CCLGGAL(from = Sys.Date(), to = Sys.Date() + 1)
 \item{to}{Fecha hasta}
 }
 \value{
-Devuelve un tibble con la serie en cuestión
+Tibble con la serie (date, CCLGGAL)
 }
 \description{
 Devuelve el CCL calculado con GGAL.
 }
 \examples{
-CCLGGAL(from = "2020-09-14", to = sys.Date() + 1) devuelve el CCL via GGAL
+\dontrun{
+CCLGGAL(from = "2020-09-14", to = Sys.Date() + 1) # devuelve el CCL via GGAL
+}
 }

@@ -6,10 +6,11 @@
 #' @param vwidth Ancho de la tabla
 #' @param vheight Alto de la tabla
 #' @return NULL
-#' @export
 #' @examples
-#' grabaTabla(variable = tablaMLC)
+#' \dontrun{grabaTabla(variable = tablaMLC)
 #' grabaTabla(variable = tablaMLC, vwidth = 990, vheight = 409)
+#' }
+#' @export
 grabaTabla = function(fecha = Sys.Date(), variable, path = "~/OneDrive/outlier/docs/tablasGraficos",
                       vwidth, vheight) {
   if (missing(variable)) stop("Falta variable")
@@ -33,6 +34,19 @@ grabaTabla = function(fecha = Sys.Date(), variable, path = "~/OneDrive/outlier/d
   #        units = units)
 }
 
+#' @title grabaTabla2
+#' @description Graba una tabla en formato png
+#' @param fecha Fecha de la tabla
+#' @param variable Tabla a grabar
+#' @param path Ruta donde se grabará la tabla
+#' @param vwidth Ancho de la tabla
+#' @param vheight Alto de la tabla
+#' @return NULL
+#' @examples
+#' \dontrun{grabaTabla(variable = tablaMLC)
+#' grabaTabla(variable = tablaMLC, vwidth = 990, vheight = 409)
+#' }
+#' @export
 grabaTabla2 = function(variable, fecha = Sys.Date(), path = "~/OneDrive/outlier/docs/tablasGraficos",
                        vwidth, vheight) {
   if (missing(variable)) stop("Falta variable")

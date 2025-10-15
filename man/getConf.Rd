@@ -24,6 +24,9 @@ getConf(
 
 \item{db}{base_de_datos (data es la usual. localhost es postgres)}
 }
+\value{
+lista con user, password, host, db y port
+}
 \description{
 Devuelve una lista con variables necesarias para consultar un determinado servidor POSTGRES.
 Es una función que es utilizada, principalmente, por dbGetTable y dbWriteDF, dado que de esa manera
@@ -51,4 +54,10 @@ LOCALHOST_POSTGRES_USER
 LOCALHOST_POSTGRES_PASSWORD
 LOCALHOST_POSTGRES_HOST
 LOCALHOST_POSTGRES_DB
+}
+\examples{
+\dontrun{
+getConf(server = "aws")
+getConf(server = "el-nombre-en-Renviron", host = "192.168.1.1")
+}
 }

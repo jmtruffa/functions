@@ -21,5 +21,7 @@ Retorna un df de fechas entre dos fechas dadas, excluyendo los días feriados ba
 disponible en la tabla "calendarioFeriados"
 }
 \examples{
+\dontrun{
 serieCal("2019-01-01", "2019-01-31")
+}
 }

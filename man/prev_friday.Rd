@@ -11,8 +11,7 @@ prev_friday(data, date_col, value_cols, calendar_name = "cal")
 
 \item{date_col}{Nombre de la columna que contiene la fecha}
 
-\item{value_cols}{Columnas para las cuáles se creará una columna con el valor
-del viernes previo}
+\item{value_cols}{Columnas para las cuáles se creará una columna con el valor del viernes previo}
 
 \item{calendar_name}{Nombre del calendario a utilizar para ajustar la fecha}
 }

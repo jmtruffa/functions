@@ -5,7 +5,7 @@
 #' @param value_columns Las columnas que se desean sumarizar. Todas las columnas por default
 #' @return Un dataframe con la sumarización de los datos por mes.
 #' @examples
-#' smonth(ccl, date_column = "date", value_columns = c("mepAL", "ccl3"))
+#' \dontrun{smonth(ccl, date_column = "date", value_columns = c("mepAL", "ccl3"))}
 #' @import dplyr
 #' @import lubridate
 #' @export
@@ -39,7 +39,7 @@ smonth <- function(df, date_column = "date", value_columns = everything()) {
 #' @param value_columns Las columnas que se desean sumarizar. Todas las columnas por default
 #' @return Un dataframe con la sumarización de los datos por semana.
 #' @examples
-#' sweek(ccl, date_column = "date", value_columns = c("mepAL", "ccl3"))
+#' \dontrun{sweek(ccl, date_column = "date", value_columns = c("mepAL", "ccl3"))}
 #' @import dplyr
 #' @import lubridate
 #' @export

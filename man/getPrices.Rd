@@ -38,6 +38,6 @@ Obtiene el precio, dada una tasa, de un activo. Opera contra la API local de yie
 Pueden pasársele vectores. Fees y settlement no opera con vectores.
 }
 \examples{
-getPrices("GD30D", "2023-07-13", 0.28, initialFee = 0.007515, endingFee = 0, endpoint = "yield")
+\dontrun{getPrices("GD30D", "2023-07-13", 0.28, initialFee = 0.007515, endingFee = 0, endpoint = "yield")}
 
 }

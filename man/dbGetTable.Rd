@@ -29,6 +29,15 @@ dbGetTable(
 
 \item{password}{Password de la base de datos en el servidor}
 }
+\value{
+\code{tibble} con la tabla solicitada.
+}
 \description{
 Función para traer una tabla desde el servidor postgresQL
+}
+\examples{
+\dontrun{dbGetTable(table = 'A3500')}
+}
+\seealso{
+getConf
 }

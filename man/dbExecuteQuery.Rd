@@ -22,17 +22,22 @@ single quotes afuera y double adentro.}
 
 \item{port}{Puerto del servidor}
 
+\item{db}{Base de Datos. Default='data'}
+
 \item{user}{Usuario de la base de datos}
 
 \item{password}{Password de la base de datos en el servidor}
-
-\item{dbname}{Base de Datos. Default='data'}
+}
+\value{
+\code{data.frame} con el resultado de la consulta.
 }
 \description{
 Es un mero wraper de dbGetQuery de DBI para no tener que indicar servidor, puerto y db
 }
 \examples{
-executeQuery(query = 'SELECT * FROM "A3500"')
+\dontrun{dbExecuteQuery(query = 'SELECT * FROM "A3500"')}
 
-
+}
+\seealso{
+getConf
 }

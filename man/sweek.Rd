@@ -20,5 +20,5 @@ Un dataframe con la sumarización de los datos por semana.
 Esta functión recibe un dataframe y sumariza los datos por semana, calculando la suma, media, mínimo y mnáximo.
 }
 \examples{
-sweek(ccl, date_column = "date", value_columns = c("mepAL", "ccl3"))
+\dontrun{sweek(ccl, date_column = "date", value_columns = c("mepAL", "ccl3"))}
 }

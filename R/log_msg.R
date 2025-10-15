@@ -5,8 +5,8 @@
 #' @param level El nivel de severidad del mensaje (por defecto es "INFO").
 #' @param log_file El archivo donde se guardará el log (por defecto es "app.log").
 #' @return No retorna ningún valor.
-#' @examples log_msg("Script finalizado correctamente.", "INFO")
-#'
+#' @examples \dontrun{log_msg("Script finalizado correctamente.", "INFO")}
+#' @export
 log_msg <- function(msg, level = "INFO", log_file = "app.log") {
   timestamp <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
   line <- sprintf("[%s] %s: %s\n", timestamp, level, msg)

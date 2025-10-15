@@ -23,8 +23,8 @@ curvaAR = function(from = "2020-09-15", to = Sys.Date(), comi = 0.0) {
     'GD46D'
   )
   type = rep("BONOS", length(tickers))
-  PPI = getPPILogin2()
-  curva = getPPIPriceHistoryMultiple3(PPI$token, ticker = tickers,
+  methodsPPI::getPPILogin()
+  curva = getPPIPriceHistoryMultiple3(token, ticker = tickers,
                                      type = type,
                                      from = from,
                                      to = to,

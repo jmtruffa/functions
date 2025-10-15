@@ -9,9 +9,6 @@
 #' fecha_fin <- "2024-06-30"
 #' days360(fecha_inicio, fecha_fin)
 #' @export
-#' @importFrom utils format
-#' @importFrom base as.Date
-#' @importFrom base as.numeric
 #'
 days360 <- function(start_date, end_date, method = c("US", "EU")) {
 

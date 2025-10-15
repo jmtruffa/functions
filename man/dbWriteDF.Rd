@@ -33,5 +33,5 @@ dbWriteDF(
 Wraper de dbWriteTable del paquete DBI pero que asume las conexiones de mi servidor.
 }
 \examples{
-dbWriteDF(table = 'data', df = dfAGrabar)
+\dontrun{dbWriteDF(table = 'data', df = dfAGrabar)}
 }

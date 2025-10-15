@@ -10,8 +10,7 @@
 #' @returns Una tibble con la serie. Anula la devolución del gráfico como
 #' segundo componente del valor retornado según viene de getPPIDLR
 #'
-#' @examples getDLR(from = "2020-09-14", to = Suys.Date(), settle = "t+2") -> Devuelve la tibble
-#'
+#' @examples \dontrun{getDLR(from = "2020-09-14", to = Suys.Date(), settle = "t+2")}
 
 getDLR = function (from = "2014-05-27", to = Sys.Date(), settle = "t+0") {
 
@@ -21,35 +20,37 @@ getDLR = function (from = "2014-05-27", to = Sys.Date(), settle = "t+0") {
   return(dlr)
 }
 
-#'
 #' CCLGGAL
 #'
 #' Devuelve el CCL calculado con GGAL.
 #'
 #' @param from Fecha desde
 #' @param to Fecha hasta
-#' @return Devuelve un tibble con la serie en cuestión
-#' @examples CCLGGAL(from = "2020-09-14", to = sys.Date() + 1) devuelve el CCL via GGAL
-CCLGGAL = function(from = Sys.Date(), to = Sys.Date() + 1) {
-    require(tidyquant)
-    require(tidyverse)
+#' @return Tibble con la serie (date, CCLGGAL)
+#' @examples
+#' \dontrun{
+#' CCLGGAL(from = "2020-09-14", to = Sys.Date() + 1) # devuelve el CCL via GGAL
+#' }
+#' @export
+CCLGGAL <- function(from = Sys.Date(), to = Sys.Date() + 1) {
+  # NO uses require() dentro de paquetes
+  # tidyquant::tq_get, dplyr verbs calificados o importados via roxygen
 
-    ggal = tq_get(c("ggal.ba","ggal"),
-                  from = from,
-                  to = to
-    )
+  ggal <- tidyquant::tq_get(c("ggal.ba","ggal"), from = from, to = to)
 
-    ggal.ba = ggal[c(1,2,8)] %>% filter(symbol == "ggal.ba")
-    ggal =  ggal[c(1,2,8)] %>% filter(symbol == "ggal")
+  ggal_ba <- ggal[c(1,2,8)] |>
+    dplyr::filter(symbol == "ggal.ba")
+  ggal_us <- ggal[c(1,2,8)] |>
+    dplyr::filter(symbol == "ggal")
 
-    CCLGGAL = left_join(ggal, ggal.ba, by = join_by(date)) %>%
-      mutate(
-        CCLGGAL = adjusted.y * 10 / adjusted.x
-      ) %>%
-      select(date, CCLGGAL) %>%
-      drop_na()
-    return(CCLGGAL)
-  }
+  out <- dplyr::left_join(ggal_us, ggal_ba, by = dplyr::join_by(date)) |>
+    dplyr::mutate(CCLGGAL = adjusted.y * 10 / adjusted.x) |>
+    dplyr::select(date, CCLGGAL) |>
+    tidyr::drop_na()
+
+  return(out)
+}
+
 
   #### Abajo quedó la anterior que usaba alphacast y que traía también solidario, oficial y blue.
   ### Función que descarga dolar Blue, oficial mayorista, oficial minorista, solidario desde Alphacast

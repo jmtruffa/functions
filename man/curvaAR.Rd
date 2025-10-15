@@ -30,5 +30,7 @@
   \item{comi}{Commision to include in calculations.}
 }
 \examples{
+\dontrun{
   curvaAR(from = "2022-01-01", to = "2022-10-01", comi = 0.0100)
+}
 }

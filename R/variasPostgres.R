@@ -9,6 +9,10 @@
 #' @param port Puerto del servidor
 #' @param dbname Base de Datos. Default='data'
 #' @param table Acá hay que poner alguna. Controla que no esté vacío
+#' @examples \dontrun{dbGetTable(table = 'A3500')}
+#' @return `tibble` con la tabla solicitada.
+#' @seealso getConf
+#' @export
 
 dbGetTable = function(
     table,
@@ -71,12 +75,16 @@ dbGetTable = function(
 #' @param user Usuario de la base de datos
 #' @param password Password de la base de datos en el servidor
 #' @param port Puerto del servidor
-#' @param dbname Base de Datos. Default='data'
+#' @param db Base de Datos. Default='data'
 #' @param query String con la query. Atención que tablas van con double quotes y valores con single. Recomiendo usar
 #' single quotes afuera y double adentro.
 #'
-#' @examples executeQuery(query = 'SELECT * FROM "A3500"')
+#' @examples \dontrun{dbExecuteQuery(query = 'SELECT * FROM "A3500"')}
 #'
+#' @return `data.frame` con el resultado de la consulta.
+#'
+#' @seealso getConf
+#' @export
 #'
 dbExecuteQuery = function(
     query,
@@ -110,9 +118,10 @@ dbExecuteQuery = function(
     password = conf$password
   )
 
-  retQuery <- dbGetQuery(con, query)
-  dbDisconnect(con)
-  return(retQuery)
+
+  on.exit(try(DBI::dbDisconnect(con), silent = TRUE), add = TRUE)
+
+  DBI::dbGetQuery(con, query)
 }
 
 
@@ -127,7 +136,8 @@ dbExecuteQuery = function(
 #' @param port Puerto del servidor
 #' @param dbname Base de Datos. Default='data'
 #'
-#' @examples dbWriteDF(table = 'data', df = dfAGrabar)
+#' @examples \dontrun{dbWriteDF(table = 'data', df = dfAGrabar)}
+#' @export
 dbWriteDF = function(
     table,
     df,
@@ -171,8 +181,8 @@ dbWriteDF = function(
 }
 
 
-#' getConf 
-#' 
+#' getConf
+#'
 #' Devuelve una lista con variables necesarias para consultar un determinado servidor POSTGRES.
 #' Es una función que es utilizada, principalmente, por dbGetTable y dbWriteDF, dado que de esa manera
 #' se les agrega un parámetro que es "server" y de esa manera se le indica donde tiene que grabar o
@@ -183,7 +193,7 @@ dbWriteDF = function(
 #' LOCAL_POSTGRES_PASSWORD
 #' LOCAL_POSTGRES_HOST
 #' LOCAL_POSTGRES_DB
-#' 
+#'
 #' AWS_POSTGRES_USER
 #' AWS_POSTGRES_PASSWORD
 #' AWS_POSTGRES_HOST
@@ -193,7 +203,7 @@ dbWriteDF = function(
 #' MEDINA_POSTGRES_PASSWORD
 #' MEDINA_POSTGRES_HOST
 #' MEDINA_POSTGRES_DB
-#' 
+#'
 #' LOCALHOST_POSTGRES_USER
 #' LOCALHOST_POSTGRES_PASSWORD
 #' LOCALHOST_POSTGRES_HOST
@@ -206,10 +216,13 @@ dbWriteDF = function(
 #' @param db base_de_datos (data es la usual. localhost es postgres)
 #'
 
-#' @dontrun{
+#' @examples
+#' \dontrun{
 #' getConf(server = "aws")
 #' getConf(server = "el-nombre-en-Renviron", host = "192.168.1.1")
 #' }
+#' @return lista con user, password, host, db y port
+#' @export
 
 
 getConf = function(server = "local",
