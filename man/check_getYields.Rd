@@ -2,7 +2,7 @@
 % Please edit documentation in R/wrapper_get_yields.R
 \name{check_getYields}
 \alias{check_getYields}
-\title{Wrapper con logging para \code{getYields}}
+\title{Wrapper con logging para getYields}
 \usage{
 check_getYields(
   letras,
@@ -10,8 +10,7 @@ check_getYields(
   precios,
   initialFee = 0,
   endingFee = 0,
-  endpoint = "yield",
-  use_global = TRUE
+  endpoint = "yield"
 )
 }
 \arguments{
@@ -26,13 +25,14 @@ check_getYields(
 \item{endingFee}{Vector o escalar con comisión final.}
 
 \item{endpoint}{Endpoint del servicio (por defecto \code{'yield'}).}
-
-\item{use_global}{Lógico: si \code{TRUE}, usa \code{getYields} del Global Env.}
 }
 \value{
 Lista con \code{ok} (lógico), \code{data} (tibble), \code{issues} (tibble o \code{NULL}) y \code{msg} (char).
 }
 \description{
+Wrapper con logging para getYields
+}
+\details{
 Ejecuta \code{getYields(letras, ...)} sin modificar los argumentos (sin reciclar),
 captura warnings/errores y devuelve un resultado estandarizado.
 }
@@ -41,4 +41,5 @@ captura warnings/errores y devuelve un resultado estandarizado.
 out <- check_getYields(letras, settlementDate, precios, initialFee = 0)
 if (!out$ok) message(out$msg) else head(out$data)
 }
+
 }
