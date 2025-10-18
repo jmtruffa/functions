@@ -8,8 +8,8 @@
 #'  @param FechaInicio Fecha por defecto 2014-05-27
 #'  @returns Una tibble de 6 columnas
 #'
-#'  @examples getMerval() -> Devuelve la tibble
-#'
+#'  @examples \dontrun{getMerval()}
+#' @export
 getMerval = function(fechaInicio = "2014-05-27", ...) {
 
   require(methodsPPI)

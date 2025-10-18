@@ -3,19 +3,15 @@
 #' @details
 #' Simplifica el trae una tabla de las bases locales.
 #' Cada tabla tiene una db asociada. En la base test
-#' La función busca la tabla y abre la DB que corresponda
+#' La función busca la tabla y abre la DB que corresponda.
 #'
-#'  @param table No tiene valor por defecto
-#'  @param overrideDates Si TRUE, no convierte los campos Fecha
-#'  @param file permite cambiar el path y nombre de la db a buscar
-#'  Sino va al default que se llama "test"
-#'  @returns Una tibble igual a la tabla consultada
-#'
-#'  @examples getTable("tabla-a-buscar") -> Devuelve la tibble
-#'  @deprecated Usar `dbGetTable()` para pegar en postgres. Ya no hay soporte para SQLlited.
-#'  @export
-
-
+#' @param table No tiene valor por defecto
+#' @param overrideDates Si TRUE, no convierte los campos Fecha
+#' @param file permite cambiar el path y nombre de la db a buscar. Si no, usa "test"
+#' @return Una tibble igual a la tabla consultada
+#' @examples \dontrun{ getTable("tabla-a-buscar") }
+#' @deprecated Usar `dbGetTable()` (ya no hay soporte para SQLite).
+#' @export
 getTable = function(table = NULL, overrideDates = FALSE, file = "~/data/test.sqlite3") {
   lifecycle::deprecate_soft(
     when = "1.0.0",  # Versión desde la que está deprecada
