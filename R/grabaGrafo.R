@@ -19,20 +19,36 @@
 grabaGrafo <- function(fecha = Sys.Date(), variable, name = NULL,
                        path = "~/OneDrive/outlier/docs/tablasGraficos",
                        width = 14.2, height = 7.61, dpi = 600, units = "in") {
-  if (missing(variable)) stop("Falta variable")
 
-  # Use the provided name if given, otherwise use the default variable name capture
+  if (missing(variable))
+    stop("Falta variable")
+
   variable_name <- if (!is.null(name)) name else deparse(substitute(variable))
+  fecha <- as.Date(fecha)
 
-  if (fecha != Sys.Date()) {
-    fecha <- as.Date(fecha)
+  file <- file.path(path, sprintf("%s %s.png", format(fecha, "%Y%m%d"), variable_name))
+
+  # Convertir tamaño a pixeles si viene en pulgadas (que es tu caso típico)
+  if (units == "in") {
+    w_px <- width  * dpi
+    h_px <- height * dpi
+  } else if (units == "px") {
+    w_px <- width
+    h_px <- height
+  } else {
+    stop("units debe ser 'in' o 'px' en esta implementación")
   }
 
-  # Save the plot with fixed dimensions, dpi, and format
-  ggplot2::ggsave(filename = file.path(path, paste0(format(fecha, "%Y%m%d"), " ", variable_name, ".png")),
-         plot = variable,
-         width = width,
-         height = height,
-         dpi = dpi,
-         units = units)
+  # Abrir dispositivo PNG usando cairo, sin ragg ni ggsave
+  grDevices::png(
+    filename = file,
+    width    = w_px,
+    height   = h_px,
+    res      = dpi,
+    type     = "cairo"
+  )
+  on.exit(grDevices::dev.off(), add = TRUE)
+
+  # Renderizar el gráfico
+  print(variable)
 }

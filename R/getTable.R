@@ -14,10 +14,10 @@
 #' @export
 getTable = function(table = NULL, overrideDates = FALSE, file = "~/data/test.sqlite3") {
   lifecycle::deprecate_soft(
-    when = "1.0.0",  # Versión desde la que está deprecada
-    what = "functions::getTable",
-    with = "dbGetTable()",  # Alternativa recomendada
-    details = "Quite el soporte de SQLlite."
+    when = "1.0.0",
+    what = "functions::getTable()",
+    with = "functions::dbGetTable()",
+    details = "Quité el soporte de SQLite."
   )
   require(tidyverse)
   tabla = data.frame()
