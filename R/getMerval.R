@@ -25,7 +25,10 @@ getMerval = function(fechaInicio = "2014-05-27", ...) {
       adjusted = ifelse(date == "2022-07-14",  100518.41, adjusted)
     )
   # bajo ccl desde API Rofex
-  ccl = rofex::getRofexCCL(from = fechaInicio)
+  #ccl = rofex::getRofexCCL(from = fechaInicio)
+  # tomo CCL desde la tabla
+  ccl = dbGetTable(table = "ccl", server = server, port = port) %>% distinct(date, .keep_all = T) %>% arrange(date)
+  ccl = ccl %>% select(date, ccl)
   # le pego la infla de US
   ccl = left_join(ccl, functions::getUSCPI(format = "daily", ...) %>% select(-series_id, USCPI = value))
   ccl = ccl %>% fill(USCPI)
@@ -35,19 +38,6 @@ getMerval = function(fechaInicio = "2014-05-27", ...) {
       mervalCCL = merval / ccl,
       mervalCCLAjustado = (mervalCCL) * (LAST(USCPI) / (USCPI))
     )
-
-  # #ccl = methodsPPI::getPPIDLR(from = fechaInicio)[[1]]
-  # ccl = functions::getDLR(from = fechaInicio, settle = settle)
-  # ### acá utilizo la función functions::getUSCPI pidiendole los datos daily para luego poder hacer el ajuste del CCL.
-  # ccl = left_join(ccl, functions::getUSCPI(format = "daily") %>% select(-series_id, USCPI = value))
-  # ccl = ccl %>% fill(USCPI)
-  #
-  #
-  # df = left_join(merval %>% select(date, merval = adjusted), ccl) %>%
-  #   mutate(
-  #     mervalCCL = merval / cclGD,
-  #     mervalCCLAjustado = (mervalCCL) * (LAST(USCPI) / (USCPI))
-  #   )
 }
 
 
