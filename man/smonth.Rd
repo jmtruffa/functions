@@ -4,7 +4,7 @@
 \alias{smonth}
 \title{Sumariza data por mes}
 \usage{
-smonth(df, date_column = "date", value_columns = everything())
+smonth(df, date_column = "date", value_columns = -all_of(date_column))
 }
 \arguments{
 \item{df}{Un dataframe}

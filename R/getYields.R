@@ -23,6 +23,7 @@ getYields = function(letras, settlementDate, precios, initialFee = 0, endingFee 
   initialFee = rep(initialFee, length(letras))
   endingFee = rep(endingFee, length(letras))
   yield = rep(0, length(letras))
+  tna = rep(0, length(letras))
   mduration = rep(0, length(letras))
   maturity = rep(0, length(letras))
   parity = rep(0, length(letras))
@@ -36,6 +37,7 @@ getYields = function(letras, settlementDate, precios, initialFee = 0, endingFee 
     initialFee,
     endingFee,
     yield,
+    tna,
     mduration,
     maturity,
     parity,
@@ -58,6 +60,7 @@ getYields = function(letras, settlementDate, precios, initialFee = 0, endingFee 
     )
 
     result$yield[i] = as.data.frame(fromJSON(rawToChar(r$content)))$Yield
+    result$tna[i] = as.data.frame(fromJSON(rawToChar(r$content)))$TNA
     result$mduration[i] = as.data.frame(fromJSON(rawToChar(r$content)))$MDuration
     ## nuevo release con mas data
     result$maturity[i] = as.data.frame(fromJSON(rawToChar(r$content)))$Maturity
