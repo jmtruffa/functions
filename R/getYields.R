@@ -98,7 +98,6 @@ getYields = function(letras, settlementDate, precios, initialFee = 0, endingFee 
 
   for (i in seq_along(letras)) {
 
-    print(paste("i =", i, "ticker =", result$letras[i]))
 
     r = GET(url,
             query = list(
