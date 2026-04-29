@@ -2,7 +2,7 @@
 % Please edit documentation in R/getYields.R
 \name{getYields}
 \alias{getYields}
-\title{getYieds}
+\title{getYields}
 \usage{
 getYields(
   letras,
@@ -10,33 +10,51 @@ getYields(
   precios,
   initialFee = 0,
   endingFee = 0,
-  endpoint = "yield"
+  endpoint = "yield",
+  host = "http://127.0.0.1:8080/"
 )
 }
 \arguments{
-\item{letras}{Puede ser un vector conteniendo múltiples}
+\item{letras}{Character vector with one or more bond tickers.}
 
-\item{settlementDate}{Fecha en formato "yyyy-mm-dd"}
+\item{settlementDate}{Settlement date in \code{"yyyy-mm-dd"} format. Can be a single value or a vector with the same length as \code{letras}.}
 
-\item{precios}{Puede ser vector.}
+\item{precios}{Numeric vector with bond prices. Can be a single value or a vector with the same length as \code{letras}.}
 
-\item{initialFee}{Valor único a aplicar upfront. Se recicla}
+\item{initialFee}{Numeric value or vector. Upfront fee applied to the initial cashflow. Defaults to \code{0}.}
 
-\item{endingFee}{Valor único a aplicar al final (si se intenta estimar una venta posterio)}
+\item{endingFee}{Numeric value or vector. Exit fee applied to the final cashflow, useful when estimating a later sale. Defaults to \code{0}.}
 
-\item{endpoint}{"yield" o "apr". Dependiendo a qué endpoint del servidor quiera pegársele.}
+\item{endpoint}{Character. API endpoint to call. Usually \code{"yield"} or \code{"apr"}.}
+
+\item{host}{Character. Host where the local API is running. Defaults to \code{"http://127.0.0.1:8080/"}.}
 }
 \value{
-tibble with same data plus yield & duration. There are several other values that the API
+A tibble with the input data plus the metrics returned by the API, including:
+\code{yield}, \code{tna}, \code{tem}, \code{tDirecta}, \code{mduration}, \code{convexity}, \code{maturity},
+\code{parity}, \code{techValue}, \code{residual}, \code{accrualDays}, \code{accruedInterest},
+\code{coefFechaCalculo}, \code{coefIssue}, \code{coefUsed}, \code{currentCoupon}, \code{lastAmort},
+and \code{lastCoupon}.
 }
 \description{
-getYieds
+getYields
 }
 \details{
-Function to get yields from the local server running yields.go at 127.0.0.1:8080.
-Fees are recycled for all the bonds in the array.
+Function to get yield-related metrics from the local server running \code{yields.go}
+at \verb{127.0.0.1:8080}.
+
+\code{initialFee} and \code{endingFee} are recycled across all bonds in \code{letras}.
 }
 \examples{
-\dontrun{getYields("GD30D", "2023-07-13", 32.3, initialFee = 0.007515, endingFee = 0, endpoint = "yield")}
+\dontrun{
+getYields(
+  letras = "GD30D",
+  settlementDate = "2023-07-13",
+  precios = 32.3,
+  initialFee = 0.007515,
+  endingFee = 0,
+  endpoint = "yield"
+)
+}
 
 }
