@@ -110,7 +110,7 @@ getYields <- function (letras, settlementDate, precios, initialFee = 0, endingFe
     result$coefIssue[i] = respuesta$`Coef Issue`
     result$coefUsed[i] = respuesta$`Coef Used`
     result$currentCoupon[i] = respuesta$`CurrentCoupon: `
-    result$lastAmort[i] = respuesta$LastAmort
+    result$lastAmort[i] = if (is.null(respuesta$LastAmort)) NA_real_ else respuesta$LastAmort
     result$lastCoupon[i] = respuesta$LastCoupon
   }
 
