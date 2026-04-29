@@ -35,11 +35,11 @@
 #'
 #' @export
 
-getYields = function(letras, settlementDate, precios, initialFee = 0, endingFee = 0, endpoint = "yield", host = 'http://127.0.0.1:8080/') {
+getYields <- function (letras, settlementDate, precios, initialFee = 0, endingFee = 0,
+                       endpoint = "yield", host = "http://127.0.0.1:8080/") {
 
   require(httr)
   require(tidyverse)
-  require(functions)
   require(jsonlite)
 
   initialFee = rep(initialFee, length(letras))
@@ -48,65 +48,42 @@ getYields = function(letras, settlementDate, precios, initialFee = 0, endingFee 
   yield = rep(0, length(letras))
   tna = rep(0, length(letras))
   tem = rep(0, length(letras))
-  tDirecta = rep(NA, length(letras))
-
+  tDirecta = rep(NA_real_, length(letras))
   mduration = rep(0, length(letras))
   convexity = rep(0, length(letras))
-
-  maturity = rep(NA, length(letras))
+  maturity = rep(NA_character_, length(letras))
   parity = rep(0, length(letras))
   techValue = rep(0, length(letras))
   residual = rep(0, length(letras))
-
   accrualDays = rep(0, length(letras))
   accruedInterest = rep(0, length(letras))
-
-  coefFechaCalculo = rep(NA, length(letras))
+  coefFechaCalculo = rep(NA_character_, length(letras))
   coefIssue = rep(0, length(letras))
   coefUsed = rep(0, length(letras))
-
   currentCoupon = rep(0, length(letras))
   lastAmort = rep(0, length(letras))
-  lastCoupon = rep(NA, length(letras))
+  lastCoupon = rep(NA_character_, length(letras))
 
   result = tibble(
-    letras,
-    precios,
-    initialFee,
-    endingFee,
-    yield,
-    tna,
-    tem,
-    tDirecta,
-    mduration,
-    convexity,
-    maturity,
-    parity,
-    techValue,
-    residual,
-    accrualDays,
-    accruedInterest,
-    coefFechaCalculo,
-    coefIssue,
-    coefUsed,
-    currentCoupon,
-    lastAmort,
-    lastCoupon
+    letras, precios, initialFee, endingFee, yield,
+    tna, tem, tDirecta, mduration, convexity, maturity, parity,
+    techValue, residual, accrualDays, accruedInterest, coefFechaCalculo,
+    coefIssue, coefUsed, currentCoupon, lastAmort, lastCoupon
   )
 
   url = paste0(host, endpoint)
 
   for (i in seq_along(letras)) {
 
-
-    r = GET(url,
-            query = list(
-              ticker = result$letras[i],
-              settlementDate = settlementDate[i],
-              price = result$precios[i],
-              initialFee = result$initialFee[i],
-              endingFee = result$endingFee[i]
-            )
+    r = GET(
+      url,
+      query = list(
+        ticker = result$letras[i],
+        settlementDate = settlementDate[i],
+        price = result$precios[i],
+        initialFee = result$initialFee[i],
+        endingFee = result$endingFee[i]
+      )
     )
 
     respuesta = fromJSON(rawToChar(r$content))
@@ -114,23 +91,24 @@ getYields = function(letras, settlementDate, precios, initialFee = 0, endingFee 
     result$yield[i] = respuesta$Yield
     result$tna[i] = respuesta$TNA
     result$tem[i] = respuesta$TEM
-    result$tDirecta[i] = ifelse(is.null(respuesta$TDirecta), NA, respuesta$TDirecta)
+
+    result$tDirecta[i] = if (is.null(respuesta$TDirecta)) {
+      NA_real_
+    } else {
+      respuesta$TDirecta
+    }
 
     result$mduration[i] = respuesta$MDuration
     result$convexity[i] = respuesta$Convexity
-
     result$maturity[i] = respuesta$Maturity
     result$parity[i] = respuesta$Parity
     result$techValue[i] = respuesta$TechnicalValue
     result$residual[i] = respuesta$Residual
-
     result$accrualDays[i] = respuesta$AccrualDays
     result$accruedInterest[i] = respuesta$AccruedInterest
-
     result$coefFechaCalculo[i] = respuesta$`Coef Fecha de Cálculo`
     result$coefIssue[i] = respuesta$`Coef Issue`
     result$coefUsed[i] = respuesta$`Coef Used`
-
     result$currentCoupon[i] = respuesta$`CurrentCoupon: `
     result$lastAmort[i] = respuesta$LastAmort
     result$lastCoupon[i] = respuesta$LastCoupon
