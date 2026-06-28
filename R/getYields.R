@@ -73,10 +73,13 @@ getYields <- function (letras, settlementDate, precios, initialFee = 0, endingFe
 
   url = paste0(host, endpoint)
 
+  apiKey = Sys.getenv("YIELDS_API_KEY")
+
   for (i in seq_along(letras)) {
 
     r = GET(
       url,
+      add_headers(`X-API-Key` = apiKey),
       query = list(
         ticker = result$letras[i],
         settlementDate = settlementDate[i],
