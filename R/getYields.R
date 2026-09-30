@@ -73,6 +73,8 @@ getYields <- function (letras, settlementDate, precios, initialFee = 0, endingFe
 
   url = paste0(host, endpoint)
 
+  or_na = function(x, na) if (is.null(x) || length(x) == 0) na else x
+
   apiKey = Sys.getenv("YIELDS_API_KEY")
 
   for (i in seq_along(letras)) {
@@ -91,30 +93,36 @@ getYields <- function (letras, settlementDate, precios, initialFee = 0, endingFe
 
     respuesta = fromJSON(rawToChar(r$content))
 
-    result$yield[i] = respuesta$Yield
-    result$tna[i] = respuesta$TNA
-    result$tem[i] = respuesta$TEM
-
-    result$tDirecta[i] = if (is.null(respuesta$TDirecta)) {
-      NA_real_
-    } else {
-      respuesta$TDirecta
+    # The API returns null metrics for undefined cases (e.g. settlement on or
+    # after maturity). Keep NA for that bond instead of failing the whole batch.
+    if (status_code(r) >= 400 || !is.null(respuesta$error)) {
+      warning(sprintf("%s (%s): HTTP %s %s", result$letras[i], settlementDate[i],
+                      status_code(r), paste(or_na(respuesta$error, ""), collapse = " ")),
+              call. = FALSE)
+    }
+    if (!is.null(respuesta$warning)) {
+      warning(sprintf("%s (%s): %s", result$letras[i], settlementDate[i], respuesta$warning),
+              call. = FALSE)
     }
 
-    result$mduration[i] = respuesta$MDuration
-    result$convexity[i] = respuesta$Convexity
-    result$maturity[i] = respuesta$Maturity
-    result$parity[i] = respuesta$Parity
-    result$techValue[i] = respuesta$TechnicalValue
-    result$residual[i] = respuesta$Residual
-    result$accrualDays[i] = respuesta$AccrualDays
-    result$accruedInterest[i] = respuesta$AccruedInterest
-    result$coefFechaCalculo[i] = respuesta$`Coef Fecha de Cálculo`
-    result$coefIssue[i] = respuesta$`Coef Issue`
-    result$coefUsed[i] = respuesta$`Coef Used`
-    result$currentCoupon[i] = respuesta$`CurrentCoupon: `
-    result$lastAmort[i] = if (is.null(respuesta$LastAmort)) NA_real_ else respuesta$LastAmort
-    result$lastCoupon[i] = respuesta$LastCoupon
+    result$yield[i] = or_na(respuesta$Yield, NA_real_)
+    result$tna[i] = or_na(respuesta$TNA, NA_real_)
+    result$tem[i] = or_na(respuesta$TEM, NA_real_)
+    result$tDirecta[i] = or_na(respuesta$TDirecta, NA_real_)
+    result$mduration[i] = or_na(respuesta$MDuration, NA_real_)
+    result$convexity[i] = or_na(respuesta$Convexity, NA_real_)
+    result$maturity[i] = or_na(respuesta$Maturity, NA_character_)
+    result$parity[i] = or_na(respuesta$Parity, NA_real_)
+    result$techValue[i] = or_na(respuesta$TechnicalValue, NA_real_)
+    result$residual[i] = or_na(respuesta$Residual, NA_real_)
+    result$accrualDays[i] = or_na(respuesta$AccrualDays, NA_real_)
+    result$accruedInterest[i] = or_na(respuesta$AccruedInterest, NA_real_)
+    result$coefFechaCalculo[i] = or_na(respuesta$`Coef Fecha de Cálculo`, NA_character_)
+    result$coefIssue[i] = or_na(respuesta$`Coef Issue`, NA_real_)
+    result$coefUsed[i] = or_na(respuesta$`Coef Used`, NA_real_)
+    result$currentCoupon[i] = or_na(respuesta$`CurrentCoupon: `, NA_real_)
+    result$lastAmort[i] = or_na(respuesta$LastAmort, NA_real_)
+    result$lastCoupon[i] = or_na(respuesta$LastCoupon, NA_character_)
   }
 
   result
